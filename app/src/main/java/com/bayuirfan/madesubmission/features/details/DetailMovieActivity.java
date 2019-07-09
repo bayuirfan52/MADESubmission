@@ -1,4 +1,4 @@
-package com.bayuirfan.madesubmission.features;
+package com.bayuirfan.madesubmission.features.details;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;

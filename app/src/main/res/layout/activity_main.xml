@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="@dimen/item_padding"
     android:paddingBottom="@dimen/item_padding"
     tools:context=".features.MainActivity">
 
-    <TextView
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tl_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/list_movie"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/vp_main"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ListView
-        android:id="@+id/lv_movies"
-        android:layout_marginTop="@dimen/list_marginTop"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/darker_gray"
-        >
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tl_main" />
 
-    </ListView>
-
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

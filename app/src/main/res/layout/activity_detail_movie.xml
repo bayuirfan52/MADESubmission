@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/item_padding"
-    tools:context=".features.DetailMovieActivity">
+    tools:context=".features.details.DetailMovieActivity">
 
     <ImageView
         android:id="@+id/img_detail"
