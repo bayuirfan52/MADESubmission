@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/item_padding"
+    tools:context=".features.DetailMovieActivity">
+
+    <ImageView
+        android:id="@+id/img_detail"
+        android:layout_width="150dp"
+        android:layout_height="185dp"
+        tools:ignore="ContentDescription" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/img_detail"
+        android:layout_toEndOf="@+id/img_detail"
+        android:layout_marginLeft="@dimen/list_margin"
+        android:layout_marginStart="@dimen/list_margin"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/tv_title_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_detail_title"
+            android:textStyle="bold"
+            android:maxLines="2"
+            />
+
+        <TextView
+            android:id="@+id/tv_aired_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/list_marginTop"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            />
+
+        <TextView
+            android:id="@+id/tv_genre_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/list_marginTop"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            />
+
+        <TextView
+            android:id="@+id/tv_duration_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/list_marginTop"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            />
+
+        <TextView
+            android:id="@+id/tv_score_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/list_marginTop"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/overview"
+        android:layout_below="@+id/img_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/overview"
+        android:textStyle="bold"
+        android:padding="@dimen/item_padding"
+        android:layout_marginTop="@dimen/list_marginTop"
+        />
+
+    <TextView
+        android:layout_below="@+id/overview"
+        android:id="@+id/tv_description_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        />
+
+    <TextView
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="@string/this_catalog_is_taken_from_https_www_themoviedb_org"
+        />
+</RelativeLayout>
