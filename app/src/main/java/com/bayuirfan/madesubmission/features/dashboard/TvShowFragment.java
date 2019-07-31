@@ -1,6 +1,7 @@
 package com.bayuirfan.madesubmission.features.dashboard;
 
 
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +15,8 @@ import android.view.ViewGroup;
 
 import com.bayuirfan.madesubmission.R;
 import com.bayuirfan.madesubmission.adapter.TvShowRecyclerAdapter;
+import com.bayuirfan.madesubmission.features.details.DetailMovieActivity;
+import com.bayuirfan.madesubmission.model.Constant;
 import com.bayuirfan.madesubmission.model.TvShowModel;
 
 import java.util.ArrayList;
@@ -29,7 +32,6 @@ public class TvShowFragment extends Fragment {
     }
 
     private TvShowRecyclerAdapter adapter;
-    private ArrayList<TvShowModel> models;
     private String[] title, description, aired, genre, score, season;
     private TypedArray image;
 
@@ -47,11 +49,17 @@ public class TvShowFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new TvShowRecyclerAdapter(getContext());
         recyclerView.setAdapter(adapter);
-
         loadAllArrayData();
         insertAllIntoArrayList();
-        adapter.setModels(models);
         recyclerView.setHasFixedSize(true);
+        adapter.setOnItemClickCallback(this::goToDetails);
+    }
+
+    private void goToDetails(TvShowModel tvShowModel) {
+        Intent intent = new Intent(getActivity(), DetailMovieActivity.class);
+        intent.putExtra(DetailMovieActivity.EXTRA_MOVIE_DETAIL, tvShowModel);
+        intent.putExtra(Constant.TAG_STATUS, 2);
+        startActivity(intent);
     }
 
     private void loadAllArrayData(){
@@ -65,18 +73,18 @@ public class TvShowFragment extends Fragment {
     }
 
     private void insertAllIntoArrayList(){
-        ArrayList<TvShowModel> movies = new ArrayList<>();
+        ArrayList<TvShowModel> models = new ArrayList<>();
         for (int i = 0;i < title.length; i++){
             TvShowModel model = new TvShowModel();
             model.setTitle(title[i]);
             model.setDescription(description[i]);
-            model.setScore(season[i]);
+            model.setSeasons(season[i]);
             model.setGenre(genre[i]);
             model.setFirstAired(aired[i]);
             model.setScore(score[i]);
             model.setPoster(image.getResourceId(i, -1));
-            movies.add(model);
+            models.add(model);
         }
-        adapter.setModels(movies);
+        adapter.setModels(models);
     }
 }

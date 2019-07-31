@@ -2,10 +2,15 @@
     <string name="app_name">Movie Catalogue</string>
     <string name="overview">Overview</string>
     <string name="title_sample">Title Sample</string>
-    <string name="aired_sample">Aired : </string>
-    <string name="genre_sample">Genre : </string>
+    <string name="aired_sample">Aired</string>
+    <string name="genre_sample">Genre</string>
+    <string name="score_sample">Score</string>
+    <string name="season_sample">Season</string>
+    <string name="duration_sample">Duration</string>
     <string name="list_movie">List Movie</string>
     <string name="this_catalog_is_taken_from_https_www_themoviedb_org">This catalog is taken from <xliff:g id="movie_homepage">https://www.themoviedb.org/</xliff:g></string>
+    <string name="detail_movies_image">Detail Movies Image</string>
+    <string name="settings">Settings</string>
 
     <!-- Movie Array Data -->
     <string-array name="movie_title">
@@ -325,4 +330,8 @@ Everyone knows the name Commissioner Gordon. He is one of the crime world\'s gre
         <item>@drawable/poster_the_umbrella</item>
         <item>@drawable/poster_the_walking_dead</item>
     </string-array>
+    <string name="movie">Movie</string>
+    <string name="tv_show">TV Show</string>
+    <string name="detail_movie">Detail Movie</string>
+    <string name="detail_tv_show">Detail TV Show</string>
 </resources>

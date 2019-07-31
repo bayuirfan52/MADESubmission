@@ -1,10 +1,10 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">Movie Catalogue</string>
-    <string name="overview">Overview</string>
+    <string name="app_name">Movie Catalouge</string>
+    <string name="overview">Ikhtisar</string>
     <string name="title_sample">Contoh Judul</string>
-    <string name="aired_sample">Tayang : </string>
-    <string name="genre_sample">Genre : </string>
-    <string name="list_movie">Daftar Movie</string>
+    <string name="aired_sample">Tayang</string>
+    <string name="genre_sample">Genre</string>
+    <string name="list_movie">Daftar Film</string>
     <string name="this_catalog_is_taken_from_https_www_themoviedb_org">Katalog ini diambil dari <xliff:g id="movie_homepage">https://www.themoviedb.org/</xliff:g></string>
 
     <!-- Movie Array Data -->
@@ -41,7 +41,7 @@
         <item>Mantan Juara Dunia Kelas Berat Rocky Balboa melayani sebagai pelatih dan mentor bagi Adonis Johnson, putra almarhum teman dan mantan saingannya Apollo Creed.</item>
         <item>Deadpool menceritakan kisah asal-usul mantan anggota Pasukan Khusus yang berubah menjadi tentara bayaran Wade Wilson, yang setelah menjadi sasaran percobaan jahat yang membuatnya memiliki kekuatan penyembuhan yang dipercepat, mengadopsi Deadpool alter ego. Dipersenjatai dengan kemampuan barunya dan selera humornya yang gelap dan berputar-putar, Deadpool memburu pria yang hampir menghancurkan hidupnya.</item>
         <item>Ketika Hiccup memenuhi mimpinya untuk menciptakan utopia naga yang damai, penemuan Toothless dari pasangan yang liar dan sulit ditangkap menarik Night Fury pergi. Ketika bahaya meningkat di rumah dan pemerintahan Hiccup sebagai kepala desa diuji, baik naga dan pengendara harus membuat keputusan yang mustahil untuk menyelamatkan jenis mereka.</item>
-        <item>Bumi damai setelah Turnamen Kekuasaan. Menyadari bahwa alam semesta masih memiliki banyak orang yang lebih kuat untuk dilihat, Goku menghabiskan seluruh hari pelatihannya untuk mencapai ketinggian yang lebih besar. Lalu suatu hari, Goku dan Vegeta dihadapkan oleh seorang Saiyan yang disebut 'Broly' yang belum pernah mereka lihat sebelumnya. Orang-orang Saiyan seharusnya hampir sepenuhnya musnah dalam kehancuran Planet Vegeta, jadi apa yang dilakukan orang ini di Bumi? Pertemuan antara tiga Saiyan yang telah mengikuti takdir yang sangat berbeda ini berubah menjadi pertempuran yang luar biasa, dengan bahkan Frieza (kembali dari Neraka) terperangkap dalam campuran.</item>
+        <item>Bumi damai setelah Turnamen Kekuasaan. Menyadari bahwa alam semesta masih memiliki banyak orang yang lebih kuat untuk dilihat, Goku menghabiskan seluruh hari pelatihannya untuk mencapai ketinggian yang lebih besar. Lalu suatu hari, Goku dan Vegeta dihadapkan oleh seorang Saiyan yang disebut \'Broly\' yang belum pernah mereka lihat sebelumnya. Orang-orang Saiyan seharusnya hampir sepenuhnya musnah dalam kehancuran Planet Vegeta, jadi apa yang dilakukan orang ini di Bumi? Pertemuan antara tiga Saiyan yang telah mengikuti takdir yang sangat berbeda ini berubah menjadi pertempuran yang luar biasa, dengan bahkan Frieza (kembali dari Neraka) terperangkap dalam campuran.</item>
         <item>Dalam serangkaian pertemuan yang meningkat, mantan penjaga keamanan David Dunn menggunakan kemampuan supernaturalnya untuk melacak Kevin Wendell Crumb, seorang lelaki terganggu yang memiliki dua puluh empat kepribadian. Sementara itu, kehadiran bayangan Elia Price muncul sebagai seorang orkestra yang menyimpan rahasia penting bagi keduanya.</item>
         <item>Kapten Glass dari USS Arkansas menemukan bahwa kudeta sedang terjadi di Rusia, jadi ia dan krunya bergabung dengan kelompok elit yang bekerja di lapangan untuk mencegah perang.</item>
         <item>Dalam London era Depresi, Jane dan Michael Banks yang sudah dewasa, bersama dengan tiga anak Michael, dikunjungi oleh Mary Poppins yang penuh teka-teki setelah kehilangan pribadi. Melalui keterampilan magisnya yang unik, dan dengan bantuan temannya Jack, dia membantu keluarga menemukan kembali sukacita dan keajaiban yang hilang dalam hidup mereka.</item>
@@ -325,4 +325,13 @@ Semua orang tahu nama Komisaris Gordon. Dia adalah salah satu musuh terbesar dun
         <item>@drawable/poster_the_umbrella</item>
         <item>@drawable/poster_the_walking_dead</item>
     </string-array>
+    <string name="detail_movies_image">Foto Detail Film</string>
+    <string name="settings">Pengaturan</string>
+    <string name="duration_sample">Durasi</string>
+    <string name="score_sample">Skor</string>
+    <string name="season_sample">Musim</string>
+    <string name="movie">Film</string>
+    <string name="tv_show">Acara TV</string>
+    <string name="detail_movie">Detail Film</string>
+    <string name="detail_tv_show">Detail Acara TV</string>
 </resources>
