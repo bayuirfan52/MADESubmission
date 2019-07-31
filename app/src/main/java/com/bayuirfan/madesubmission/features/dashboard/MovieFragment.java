@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.bayuirfan.madesubmission.R;
 import com.bayuirfan.madesubmission.adapter.MovieRecyclerAdapter;
 import com.bayuirfan.madesubmission.features.details.DetailMovieActivity;
+import com.bayuirfan.madesubmission.model.Constant;
 import com.bayuirfan.madesubmission.model.MovieModel;
 
 import java.util.ArrayList;
@@ -82,6 +83,7 @@ public class MovieFragment extends Fragment {
     private void goToDetails(MovieModel movieModel){
         Intent intent = new Intent(getActivity(), DetailMovieActivity.class);
         intent.putExtra(DetailMovieActivity.EXTRA_MOVIE_DETAIL, movieModel);
+        intent.putExtra(Constant.TAG_STATUS, 1);
         startActivity(intent);
     }
 }
