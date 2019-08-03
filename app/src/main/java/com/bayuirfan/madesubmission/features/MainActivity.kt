@@ -8,8 +8,8 @@ import android.view.Menu
 import android.view.MenuItem
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.adapter.MainPagerAdapter
-import com.bayuirfan.madesubmission.features.dashboard.MovieFragment
-import com.bayuirfan.madesubmission.features.dashboard.TvShowFragment
+import com.bayuirfan.madesubmission.features.dashboard.movie.MovieFragment
+import com.bayuirfan.madesubmission.features.dashboard.tvshow.TvShowFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

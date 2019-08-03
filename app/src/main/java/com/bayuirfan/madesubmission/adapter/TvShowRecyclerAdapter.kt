@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.list_item.view.*
 
 class TvShowRecyclerAdapter(
         private val context: Context,
-        private val tvShowModel: List<TvShowModel>,
+        private val tvShowModel: ArrayList<TvShowModel>,
         private val callback: OnItemClickCallback) : RecyclerView.Adapter<TvShowRecyclerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder =
@@ -34,9 +34,7 @@ class TvShowRecyclerAdapter(
         }
     }
 
-    companion object {
-        interface OnItemClickCallback {
-            fun onItemClicked(tvShowModel: TvShowModel)
-        }
+    interface OnItemClickCallback {
+        fun onItemClicked(tvShowModel: TvShowModel)
     }
 }

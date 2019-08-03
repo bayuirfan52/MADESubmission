@@ -5,8 +5,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bayuirfan.madesubmission.BuildConfig
 import com.bayuirfan.madesubmission.R
+import com.bayuirfan.madesubmission.model.Constant
 import com.bayuirfan.madesubmission.model.data.MovieModel
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.list_item.view.*
 
 class MovieRecyclerAdapter(
@@ -27,16 +30,16 @@ class MovieRecyclerAdapter(
         fun bind(movieModels: MovieModel) {
             itemView.tv_title_list.text = movieModels.title
             itemView.tv_aired_list.text = movieModels.releaseDate
-
+            Glide.with(context)
+                    .load("${BuildConfig.POSTER_BASE_URL}${Constant.IMG_W185}${movieModels.posterPath}")
+                    .into(itemView.img_list)
             itemView.setOnClickListener {
                 callback.onItemClicked(movieModels)
             }
         }
     }
 
-    companion object {
-        interface OnItemClickCallback {
-            fun onItemClicked(movieModels: MovieModel)
-        }
+    interface OnItemClickCallback {
+        fun onItemClicked(movieModels: MovieModel)
     }
 }
