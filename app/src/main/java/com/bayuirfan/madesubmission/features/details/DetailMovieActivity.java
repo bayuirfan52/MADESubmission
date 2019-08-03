@@ -8,20 +8,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bayuirfan.madesubmission.R;
+import com.bayuirfan.madesubmission.model.Constant;
 import com.bayuirfan.madesubmission.model.MovieModel;
+import com.bayuirfan.madesubmission.model.TvShowModel;
 
 public class DetailMovieActivity extends AppCompatActivity {
     private ImageView image;
-    private TextView tvTitle, tvDescription, tvGenre, tvAired, tvScore, tvDuration;
+    private TextView tvTitle, tvDescription, tvGenre, tvAired, tvScore, tvDuration, tvDurationTitle;
     public static final String EXTRA_MOVIE_DETAIL = "extra_movie_detail";
 
-    @SuppressWarnings("ConstantConditions")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_movie);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Detail Movie");
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setupComponent();
         getExtraData();
     }
@@ -30,7 +31,7 @@ public class DetailMovieActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
     @Override
@@ -49,17 +50,48 @@ public class DetailMovieActivity extends AppCompatActivity {
         tvGenre = findViewById(R.id.tv_genre_detail);
         tvScore = findViewById(R.id.tv_score_detail);
         tvDuration = findViewById(R.id.tv_duration_detail);
+        tvDurationTitle = findViewById(R.id.duration_title);
+    }
+
+    private void getExtraData(){
+        int status = getIntent().getIntExtra(Constant.TAG_STATUS, 0);
+        if (getSupportActionBar() != null) {
+            switch (status) {
+                case 1:
+                    getExtraDataMovies();
+                    getSupportActionBar().setTitle(R.string.detail_movie);
+                    break;
+                case 2:
+                    getExtraDataTvShow();
+                    getSupportActionBar().setTitle(R.string.detail_tv_show);
+                    break;
+            }
+        }
     }
 
     @SuppressLint("SetTextI18n")
-    private void getExtraData(){
+    private void getExtraDataMovies(){
         MovieModel movie = getIntent().getParcelableExtra(EXTRA_MOVIE_DETAIL);
         image.setImageResource(movie.getPoster());
         tvTitle.setText(movie.getTitle());
         tvDescription.setText(movie.getDescription());
-        tvGenre.setText("Genre : " + movie.getGenre());
-        tvAired.setText("Aired : " + movie.getYearAired());
-        tvScore.setText("Score : " + movie.getScore());
-        tvDuration.setText("Duration : " + movie.getDuration());
+        tvGenre.setText(movie.getGenre());
+        tvAired.setText(movie.getYearAired());
+        tvScore.setText(movie.getScore());
+        tvDuration.setText(movie.getDuration());
+        tvDurationTitle.setText(R.string.duration_sample);
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void getExtraDataTvShow(){
+        TvShowModel tvShowModel = getIntent().getParcelableExtra(EXTRA_MOVIE_DETAIL);
+        image.setImageResource(tvShowModel.getPoster());
+        tvTitle.setText(tvShowModel.getTitle());
+        tvDescription.setText(tvShowModel.getDescription());
+        tvGenre.setText(tvShowModel.getGenre());
+        tvAired.setText(tvShowModel.getFirstAired());
+        tvScore.setText(tvShowModel.getScore());
+        tvDuration.setText(tvShowModel.getSeasons());
+        tvDurationTitle.setText(R.string.season_sample);
     }
 }
