@@ -3,6 +3,7 @@ package com.bayuirfan.madesubmission.features.details
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import android.view.View
 import com.bayuirfan.madesubmission.BuildConfig
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.model.Constant
@@ -18,7 +19,7 @@ class DetailMovieActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detail_movie)
         if (supportActionBar != null)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+        showLoading(true)
         getExtraData()
     }
 
@@ -48,6 +49,25 @@ class DetailMovieActivity : AppCompatActivity() {
                     supportActionBar?.setTitle(R.string.detail_tv_show)
                 }
             }
+            showLoading(false)
+        }
+    }
+
+    private fun showLoading(value: Boolean){
+        if(value){
+            img_detail.visibility = View.GONE
+            tv_title_detail.visibility = View.GONE
+            tv_description_detail.visibility = View.GONE
+            tv_score_detail.visibility = View.GONE
+            tv_aired_detail.visibility = View.GONE
+            progress_detail.visibility = View.VISIBLE
+        } else {
+            img_detail.visibility = View.VISIBLE
+            tv_title_detail.visibility = View.VISIBLE
+            tv_description_detail.visibility = View.VISIBLE
+            tv_score_detail.visibility = View.VISIBLE
+            tv_aired_detail.visibility = View.VISIBLE
+            progress_detail.visibility = View.GONE
         }
     }
 
@@ -59,7 +79,7 @@ class DetailMovieActivity : AppCompatActivity() {
 
         tv_title_detail.text = data.title
         tv_aired_detail.text = data.releaseDate
-        tv_score_detail.text = data.voteCount
+        tv_score_detail.text = data.voteAverage
         tv_description_detail.text = data.overview
     }
 
@@ -70,7 +90,7 @@ class DetailMovieActivity : AppCompatActivity() {
                 .into(img_detail)
         tv_title_detail.text = data.name
         tv_aired_detail.text = data.firstAirDate
-        tv_score_detail.text = data.voteCount.toString()
+        tv_score_detail.text = data.voteAverage
         tv_description_detail.text = data.overview
     }
 

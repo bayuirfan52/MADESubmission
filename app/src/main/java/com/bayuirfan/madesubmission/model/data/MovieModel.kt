@@ -5,8 +5,8 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class MovieModel(
-        @SerializedName("vote_count")
-        val voteCount: String?,
+        @SerializedName("vote_average")
+        val voteAverage: String?,
         val id: Int,
         val title: String?,
         @SerializedName("poster_path")
@@ -31,7 +31,7 @@ data class MovieModel(
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(voteCount)
+        parcel.writeString(voteAverage)
         parcel.writeInt(id)
         parcel.writeString(title)
         parcel.writeString(posterPath)
