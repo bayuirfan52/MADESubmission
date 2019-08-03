@@ -7,8 +7,8 @@ import com.bayuirfan.madesubmission.model.data.TvShowModel
 import retrofit2.http.GET
 import rx.Observable
 
-interface MovieCatalougeInterface {
-    @GET("discover/movie?api_key=${BuildConfig.API_KEY}&language=en-US")
+interface MovieCatalogueInterface {
+    @GET("discover/movie?api_key=${BuildConfig.API_KEY}&language=en-US&include_adult=false")
     fun getMovieList(): Observable<Discover<MovieModel>>
 
     @GET("discover/tv?api_key=${BuildConfig.API_KEY}&language=en-US")

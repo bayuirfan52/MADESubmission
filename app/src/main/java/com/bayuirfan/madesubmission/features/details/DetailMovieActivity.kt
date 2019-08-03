@@ -7,6 +7,7 @@ import com.bayuirfan.madesubmission.BuildConfig
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.model.Constant
 import com.bayuirfan.madesubmission.model.data.MovieModel
+import com.bayuirfan.madesubmission.model.data.TvShowModel
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_detail_movie.*
 
@@ -43,7 +44,7 @@ class DetailMovieActivity : AppCompatActivity() {
                     supportActionBar?.setTitle(R.string.detail_movie)
                 }
                 2 -> {
-
+                    loadFromTvShow()
                     supportActionBar?.setTitle(R.string.detail_tv_show)
                 }
             }
@@ -63,7 +64,14 @@ class DetailMovieActivity : AppCompatActivity() {
     }
 
     private fun loadFromTvShow(){
-
+        val data: TvShowModel = intent.getParcelableExtra(EXTRA_DETAIL)
+        Glide.with(this)
+                .load("${BuildConfig.POSTER_BASE_URL}${Constant.IMG_W185}${data.posterPath}")
+                .into(img_detail)
+        tv_title_detail.text = data.name
+        tv_aired_detail.text = data.firstAirDate
+        tv_score_detail.text = data.voteCount.toString()
+        tv_description_detail.text = data.overview
     }
 
     companion object {

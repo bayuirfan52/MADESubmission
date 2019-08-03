@@ -6,17 +6,17 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MovieCatalougeService {
+class MovieCatalogueService {
     companion object {
         private val builder = OkHttpClient.Builder()
-        fun getClient(): MovieCatalougeInterface{
+        fun getClient(): MovieCatalogueInterface{
             val retrofit = Retrofit.Builder()
                     .baseUrl(BuildConfig.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .client(builder.build())
                     .build()
-            return retrofit.create(MovieCatalougeInterface::class.java)
+            return retrofit.create(MovieCatalogueInterface::class.java)
         }
     }
 }

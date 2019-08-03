@@ -59,6 +59,8 @@ class MovieFragment : Fragment(), MovieRecyclerAdapter.OnItemClickCallback {
             } else {
                 showError()
             }
+        } else {
+            showError()
         }
     }
 
@@ -75,6 +77,12 @@ class MovieFragment : Fragment(), MovieRecyclerAdapter.OnItemClickCallback {
     }
 
     private fun showLoading(value: Boolean){
+        if (value) {
+            progress_movie.visibility = View.VISIBLE
+            rv_movie.visibility = View.GONE
+        } else {
+            progress_movie.visibility = View.GONE
+        }
     }
 
     private fun goToDetails(movieModel: MovieModel) {
