@@ -6,7 +6,7 @@ import android.view.MenuItem
 import android.view.View
 import com.bayuirfan.madesubmission.BuildConfig
 import com.bayuirfan.madesubmission.R
-import com.bayuirfan.madesubmission.model.Constant
+import com.bayuirfan.madesubmission.utils.Constant
 import com.bayuirfan.madesubmission.model.data.MovieModel
 import com.bayuirfan.madesubmission.model.data.TvShowModel
 import com.bumptech.glide.Glide
