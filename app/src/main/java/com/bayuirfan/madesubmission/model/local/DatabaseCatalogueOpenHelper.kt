@@ -10,6 +10,7 @@ import com.bayuirfan.madesubmission.utils.Constant.FIRST_AIR_DATE
 import com.bayuirfan.madesubmission.utils.Constant.ID
 import com.bayuirfan.madesubmission.utils.Constant.ID_DATA
 import com.bayuirfan.madesubmission.utils.Constant.MOVIE_TABLE
+import com.bayuirfan.madesubmission.utils.Constant.NAME
 import com.bayuirfan.madesubmission.utils.Constant.OVERVIEW
 import com.bayuirfan.madesubmission.utils.Constant.POSTER_PATH
 import com.bayuirfan.madesubmission.utils.Constant.RELEASE_DATE
@@ -35,7 +36,7 @@ class DatabaseCatalogueOpenHelper(context: Context) : SQLiteOpenHelper(
         private const val SQL_CREATE_TV_SHOW = "CREATE TABLE $TV_SHOW_TABLE (" +
                 "$ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "$ID_DATA INTEGER UNIQUE, " +
-                "$TITLE TEXT NOT NULL, " +
+                "$NAME TEXT NOT NULL, " +
                 "$POSTER_PATH TEXT, " +
                 "$BACKDROP_PATH TEXT, " +
                 "$FIRST_AIR_DATE TEXT, " +

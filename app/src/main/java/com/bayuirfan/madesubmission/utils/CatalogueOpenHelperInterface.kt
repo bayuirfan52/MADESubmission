@@ -1,6 +1,6 @@
 package com.bayuirfan.madesubmission.utils
 
-interface CatalogueOpenHelper {
+interface CatalogueOpenHelperInterface {
     fun open()
     fun close()
 }

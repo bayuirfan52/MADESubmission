@@ -5,40 +5,40 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class TvShowModel(
-        @SerializedName("original_name")
-        val originalName: String?,
+        val ids: Int,
+        @SerializedName("id")
+        val idData: Int,
         val name: String?,
+        @SerializedName("poster_path")
+        val posterPath: String?,
+        @SerializedName("backdrop_path")
+        val backdropPath: String?,
+        val overview: String?,
         @SerializedName("vote_average")
         val voteAverage: String?,
         @SerializedName("first_air_date")
-        val firstAirDate: String?,
-        @SerializedName("backdrop_path")
-        val backdropPath: String?,
-        val id: Int,
-        val overview: String?,
-        @SerializedName("poster_path")
-        val posterPath: String?
+        val firstAirDate: String?
 ): Parcelable {
     private constructor(parcel: Parcel) : this(
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
             parcel.readInt(),
+            parcel.readInt(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
             parcel.readString(),
             parcel.readString()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(originalName)
+        parcel.writeInt(ids)
+        parcel.writeInt(idData)
         parcel.writeString(name)
+        parcel.writeString(posterPath)
+        parcel.writeString(backdropPath)
+        parcel.writeString(overview)
         parcel.writeString(voteAverage)
         parcel.writeString(firstAirDate)
-        parcel.writeString(backdropPath)
-        parcel.writeInt(id)
-        parcel.writeString(overview)
-        parcel.writeString(posterPath)
     }
 
     override fun describeContents(): Int {

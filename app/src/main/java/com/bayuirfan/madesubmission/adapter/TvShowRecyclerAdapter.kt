@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.list_item.view.*
 
 class TvShowRecyclerAdapter(
         private val context: Context,
-        private val tvShowModel: List<TvShowModel>,
+        private val tvShowModel: ArrayList<TvShowModel>,
         private val callback: OnItemClickCallback) : RecyclerView.Adapter<TvShowRecyclerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder =
@@ -28,7 +28,7 @@ class TvShowRecyclerAdapter(
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(tvShowModel: TvShowModel){
-            itemView.tv_title_list.text = tvShowModel.originalName
+            itemView.tv_title_list.text = tvShowModel.name
             itemView.tv_aired_list.text = tvShowModel.firstAirDate
             Glide.with(context)
                     .load("${BuildConfig.POSTER_BASE_URL}${Constant.IMG_W185}${tvShowModel.posterPath}")

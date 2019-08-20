@@ -11,7 +11,6 @@ import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.adapter.MainPagerAdapter
 import com.bayuirfan.madesubmission.features.dashboard.movie.MovieFragment
 import com.bayuirfan.madesubmission.features.dashboard.tvshow.TvShowFragment
-import com.bayuirfan.madesubmission.utils.Constant.LOAD_FROM_INTERNET
 import com.bayuirfan.madesubmission.utils.Constant.LOAD_FROM_LOCAL_STORAGE
 import kotlinx.android.synthetic.main.fragment_favorite.*
 
@@ -28,7 +27,7 @@ class FavoriteFragment : Fragment() {
 
         with(activity as AppCompatActivity){
             val adapter = MainPagerAdapter(supportFragmentManager)
-            adapter.add(MovieFragment.getInstance(LOAD_FROM_INTERNET), resources.getString(R.string.movie))
+            adapter.add(MovieFragment.getInstance(LOAD_FROM_LOCAL_STORAGE), resources.getString(R.string.movie))
             adapter.add(TvShowFragment.getInstance(LOAD_FROM_LOCAL_STORAGE), resources.getString(R.string.tv_show))
             vp_favorite.adapter = adapter
             tl_favorite.setupWithViewPager(vp_favorite)

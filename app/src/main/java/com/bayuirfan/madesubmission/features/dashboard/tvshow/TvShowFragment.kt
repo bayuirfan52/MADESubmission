@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -15,20 +16,20 @@ import com.bayuirfan.madesubmission.adapter.TvShowRecyclerAdapter
 import com.bayuirfan.madesubmission.features.details.DetailMovieActivity
 import com.bayuirfan.madesubmission.model.data.Discover
 import com.bayuirfan.madesubmission.model.data.TvShowModel
+import com.bayuirfan.madesubmission.model.local.LoadTvShowAsync
+import com.bayuirfan.madesubmission.model.local.TvShowOpenHelper
 import com.bayuirfan.madesubmission.utils.Constant.KEYS
 import com.bayuirfan.madesubmission.utils.Constant.LOAD_FROM_INTERNET
 import com.bayuirfan.madesubmission.utils.Constant.LOAD_FROM_LOCAL_STORAGE
 import com.bayuirfan.madesubmission.utils.Constant.TAG_STATUS
+import com.bayuirfan.madesubmission.utils.LoadDataCallback
 import kotlinx.android.synthetic.main.fragment_tv_show.*
 import kotlinx.android.synthetic.main.fragment_tv_show.view.*
 
-class TvShowFragment : Fragment(), TvShowRecyclerAdapter.OnItemClickCallback {
-    override fun onItemClicked(tvShowModel: TvShowModel) {
-        goToDetails(tvShowModel)
-    }
-
+class TvShowFragment : Fragment(), TvShowRecyclerAdapter.OnItemClickCallback, LoadDataCallback<TvShowModel> {
     private lateinit var adapter: TvShowRecyclerAdapter
     private var data = mutableListOf<TvShowModel>()
+    private lateinit var tvShowHelper: TvShowOpenHelper
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -48,9 +49,13 @@ class TvShowFragment : Fragment(), TvShowRecyclerAdapter.OnItemClickCallback {
             }
         }
 
+        with(activity as AppCompatActivity){
+            tvShowHelper = TvShowOpenHelper.getInstance(applicationContext)
+        }
+
         view.rv_tv_show.layoutManager = LinearLayoutManager(activity)
         context?.let {
-            adapter = TvShowRecyclerAdapter(it, data, this)
+            adapter = TvShowRecyclerAdapter(it, data as ArrayList<TvShowModel>, this)
         }
         view.rv_tv_show.adapter = adapter
         view.rv_tv_show.setHasFixedSize(true)
@@ -66,6 +71,7 @@ class TvShowFragment : Fragment(), TvShowRecyclerAdapter.OnItemClickCallback {
         showLoading(false)
         if (data != null){
             if (data.status_code == null){
+                this.data.clear()
                 this.data.addAll(data.results)
                 adapter.notifyDataSetChanged()
                 hideError()
@@ -78,7 +84,13 @@ class TvShowFragment : Fragment(), TvShowRecyclerAdapter.OnItemClickCallback {
     }
 
     private fun getTvShowLocalData(){
+        tvShowHelper.open()
+        LoadTvShowAsync(tvShowHelper, this).execute()
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        tvShowHelper.close()
     }
 
     private fun showLoading(value: Boolean){
@@ -107,6 +119,25 @@ class TvShowFragment : Fragment(), TvShowRecyclerAdapter.OnItemClickCallback {
         intent.putExtra(DetailMovieActivity.EXTRA_DETAIL, tvShowModel)
         intent.putExtra(TAG_STATUS, 2)
         startActivity(intent)
+    }
+
+    override fun onPreExecute() {
+        showLoading(true)
+    }
+
+    override fun onPostExecute(list: ArrayList<TvShowModel>) {
+        showLoading(false)
+        if (list.isEmpty())
+            showError()
+        else {
+            hideError()
+            data.clear()
+            data.addAll(list)
+        }
+    }
+
+    override fun onItemClicked(tvShowModel: TvShowModel) {
+        goToDetails(tvShowModel)
     }
 
     companion object {

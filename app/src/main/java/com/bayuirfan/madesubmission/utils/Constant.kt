@@ -19,6 +19,7 @@ object Constant {
 
     // Columns
     const val TITLE = "TITLE"
+    const val NAME = "NAME"
     const val POSTER_PATH = "POSTER_PATH"
     const val ID = "_id"
     const val VOTE_AVERAGE = "VOTE_AVERAGE"

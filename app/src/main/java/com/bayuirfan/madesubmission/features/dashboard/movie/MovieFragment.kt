@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -14,17 +15,20 @@ import com.bayuirfan.madesubmission.adapter.MovieRecyclerAdapter
 import com.bayuirfan.madesubmission.features.details.DetailMovieActivity
 import com.bayuirfan.madesubmission.model.data.Discover
 import com.bayuirfan.madesubmission.model.data.MovieModel
+import com.bayuirfan.madesubmission.model.local.LoadMovieAsync
+import com.bayuirfan.madesubmission.model.local.MovieOpenHelper
 import com.bayuirfan.madesubmission.utils.Constant
 import com.bayuirfan.madesubmission.utils.Constant.KEYS
+import com.bayuirfan.madesubmission.utils.Constant.LOAD_FROM_INTERNET
+import com.bayuirfan.madesubmission.utils.Constant.LOAD_FROM_LOCAL_STORAGE
+import com.bayuirfan.madesubmission.utils.LoadDataCallback
 import kotlinx.android.synthetic.main.fragment_movie.*
 import kotlinx.android.synthetic.main.fragment_movie.view.*
 
-class MovieFragment : Fragment(), MovieRecyclerAdapter.OnItemClickCallback {
-    override fun onItemClicked(movieModels: MovieModel) {
-        goToDetails(movieModels)
-    }
+class MovieFragment : Fragment(), MovieRecyclerAdapter.OnItemClickCallback, LoadDataCallback<MovieModel> {
     private lateinit var adapter: MovieRecyclerAdapter
     private var movieModel = mutableListOf<MovieModel>()
+    private lateinit var movieOpenHelper: MovieOpenHelper
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
@@ -32,10 +36,24 @@ class MovieFragment : Fragment(), MovieRecyclerAdapter.OnItemClickCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getMovieData()
+
+        when(arguments?.getInt(KEYS, 0)){
+            LOAD_FROM_INTERNET -> {
+                getMovieData()
+            }
+
+            LOAD_FROM_LOCAL_STORAGE -> {
+                getMovieLocalData()
+            }
+        }
+
+        with(activity as AppCompatActivity){
+            movieOpenHelper = MovieOpenHelper.getInstance(applicationContext)
+        }
+
         view.rv_movie.layoutManager = LinearLayoutManager(context)
         context?.let {
-            adapter = MovieRecyclerAdapter(it, movieModel,this)
+            adapter = MovieRecyclerAdapter(it, movieModel as ArrayList<MovieModel>,this)
         }
         view.rv_movie.adapter = adapter
         view.rv_movie.setHasFixedSize(true)
@@ -51,6 +69,7 @@ class MovieFragment : Fragment(), MovieRecyclerAdapter.OnItemClickCallback {
         showLoading(false)
         if (data != null){
             if (data.status_code == null){
+                movieModel.clear()
                 movieModel.addAll(data.results)
                 adapter.notifyDataSetChanged()
                 hideError()
@@ -60,6 +79,11 @@ class MovieFragment : Fragment(), MovieRecyclerAdapter.OnItemClickCallback {
         } else {
             showError()
         }
+    }
+
+    private fun getMovieLocalData(){
+        movieOpenHelper.open()
+        LoadMovieAsync(movieOpenHelper, this).execute()
     }
 
     private fun showError(){
@@ -88,6 +112,25 @@ class MovieFragment : Fragment(), MovieRecyclerAdapter.OnItemClickCallback {
         intent.putExtra(DetailMovieActivity.EXTRA_DETAIL, movieModel)
         intent.putExtra(Constant.TAG_STATUS, 1)
         startActivity(intent)
+    }
+
+    override fun onPreExecute() {
+        showLoading(true)
+    }
+
+    override fun onPostExecute(list: ArrayList<MovieModel>) {
+        showLoading(false)
+        if (list.isEmpty())
+            showError()
+        else {
+            hideError()
+            movieModel.clear()
+            movieModel.addAll(list)
+        }
+    }
+
+    override fun onItemClicked(movieModels: MovieModel) {
+        goToDetails(movieModels)
     }
 
     companion object {
