@@ -16,4 +16,5 @@
     <string name="detail_movie">Detail Movie</string>
     <string name="detail_tv_show">Detail TV Show</string>
     <string name="not_found">Data not found</string>
+    <string name="favorite">Favorite</string>
 </resources>

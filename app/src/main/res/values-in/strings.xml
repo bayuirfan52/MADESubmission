@@ -16,4 +16,5 @@
     <string name="detail_movie">Detail Film</string>
     <string name="detail_tv_show">Detail Acara TV</string>
     <string name="not_found">Data tidak ditemukan</string>
+    <string name="favorite">Favorit</string>
 </resources>

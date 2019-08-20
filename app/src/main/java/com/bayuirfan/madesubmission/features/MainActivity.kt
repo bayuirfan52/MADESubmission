@@ -3,13 +3,14 @@ package com.bayuirfan.madesubmission.features
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.bayuirfan.madesubmission.R
-import com.bayuirfan.madesubmission.adapter.MainPagerAdapter
 import com.bayuirfan.madesubmission.features.dashboard.movie.MovieFragment
 import com.bayuirfan.madesubmission.features.dashboard.tvshow.TvShowFragment
+import com.bayuirfan.madesubmission.features.favorites.FavoriteFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -17,7 +18,23 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setupComponent()
+
+        bottom_navigation_view.setOnNavigationItemSelectedListener {
+            item ->
+            when(item.itemId){
+                R.id.menu_movie -> {
+                    setFragment(MovieFragment(), savedInstanceState)
+                }
+                R.id.menu_tv_show -> {
+                    setFragment(TvShowFragment(), savedInstanceState)
+                }
+                R.id.menu_favorite -> {
+                    setFragment(FavoriteFragment(), savedInstanceState)
+                }
+            }
+            true
+        }
+        bottom_navigation_view.selectedItemId = R.id.menu_movie
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -34,11 +51,13 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun setupComponent() {
-        val mainPagerAdapter = MainPagerAdapter(this.supportFragmentManager)
-        mainPagerAdapter.add(MovieFragment(), resources.getString(R.string.movie))
-        mainPagerAdapter.add(TvShowFragment(), resources.getString(R.string.tv_show))
-        vp_main.adapter = mainPagerAdapter
-        tl_main.setupWithViewPager(vp_main)
+    private fun setFragment(fragment: Fragment?, savedInstanceState: Bundle?){
+        if (savedInstanceState == null){
+            fragment?.let {
+                supportFragmentManager.beginTransaction()
+                        .replace(R.id.container_main, it)
+                        .commit()
+            }
+        }
     }
 }

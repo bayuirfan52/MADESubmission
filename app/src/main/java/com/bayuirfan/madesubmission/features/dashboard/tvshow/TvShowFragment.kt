@@ -13,15 +13,15 @@ import android.view.ViewGroup
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.adapter.TvShowRecyclerAdapter
 import com.bayuirfan.madesubmission.features.details.DetailMovieActivity
-import com.bayuirfan.madesubmission.model.Constant
 import com.bayuirfan.madesubmission.model.data.Discover
 import com.bayuirfan.madesubmission.model.data.TvShowModel
+import com.bayuirfan.madesubmission.utils.Constant.KEYS
+import com.bayuirfan.madesubmission.utils.Constant.LOAD_FROM_INTERNET
+import com.bayuirfan.madesubmission.utils.Constant.LOAD_FROM_LOCAL_STORAGE
+import com.bayuirfan.madesubmission.utils.Constant.TAG_STATUS
 import kotlinx.android.synthetic.main.fragment_tv_show.*
 import kotlinx.android.synthetic.main.fragment_tv_show.view.*
 
-/**
- * A simple [Fragment] subclass.
- */
 class TvShowFragment : Fragment(), TvShowRecyclerAdapter.OnItemClickCallback {
     override fun onItemClicked(tvShowModel: TvShowModel) {
         goToDetails(tvShowModel)
@@ -38,7 +38,16 @@ class TvShowFragment : Fragment(), TvShowRecyclerAdapter.OnItemClickCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getTvShowData()
+
+        when(arguments?.getInt(KEYS, 0)){
+            LOAD_FROM_INTERNET -> {
+                getTvShowData()
+            }
+            LOAD_FROM_LOCAL_STORAGE -> {
+                getTvShowLocalData()
+            }
+        }
+
         view.rv_tv_show.layoutManager = LinearLayoutManager(activity)
         context?.let {
             adapter = TvShowRecyclerAdapter(it, data, this)
@@ -68,6 +77,10 @@ class TvShowFragment : Fragment(), TvShowRecyclerAdapter.OnItemClickCallback {
         }
     }
 
+    private fun getTvShowLocalData(){
+
+    }
+
     private fun showLoading(value: Boolean){
         if (value){
             progress_tv_show.visibility = View.VISIBLE
@@ -92,7 +105,16 @@ class TvShowFragment : Fragment(), TvShowRecyclerAdapter.OnItemClickCallback {
     private fun goToDetails(tvShowModel: TvShowModel) {
         val intent = Intent(activity, DetailMovieActivity::class.java)
         intent.putExtra(DetailMovieActivity.EXTRA_DETAIL, tvShowModel)
-        intent.putExtra(Constant.TAG_STATUS, 2)
+        intent.putExtra(TAG_STATUS, 2)
         startActivity(intent)
+    }
+
+    companion object {
+        fun getInstance(KEY: Int): Fragment{
+            val fragment = TvShowFragment()
+            fragment.arguments?.putInt(KEYS, KEY)
+
+            return fragment
+        }
     }
 }

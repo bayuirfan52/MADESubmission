@@ -12,15 +12,13 @@ import android.view.ViewGroup
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.adapter.MovieRecyclerAdapter
 import com.bayuirfan.madesubmission.features.details.DetailMovieActivity
-import com.bayuirfan.madesubmission.model.Constant
 import com.bayuirfan.madesubmission.model.data.Discover
 import com.bayuirfan.madesubmission.model.data.MovieModel
+import com.bayuirfan.madesubmission.utils.Constant
+import com.bayuirfan.madesubmission.utils.Constant.KEYS
 import kotlinx.android.synthetic.main.fragment_movie.*
 import kotlinx.android.synthetic.main.fragment_movie.view.*
 
-/**
- * A simple [Fragment] subclass.
- */
 class MovieFragment : Fragment(), MovieRecyclerAdapter.OnItemClickCallback {
     override fun onItemClicked(movieModels: MovieModel) {
         goToDetails(movieModels)
@@ -90,5 +88,14 @@ class MovieFragment : Fragment(), MovieRecyclerAdapter.OnItemClickCallback {
         intent.putExtra(DetailMovieActivity.EXTRA_DETAIL, movieModel)
         intent.putExtra(Constant.TAG_STATUS, 1)
         startActivity(intent)
+    }
+
+    companion object {
+        fun getInstance(KEY: Int): Fragment{
+            val fragment = MovieFragment()
+            fragment.arguments?.putInt(KEYS, KEY)
+
+            return fragment
+        }
     }
 }
