@@ -17,4 +17,6 @@
     <string name="detail_tv_show">Detail TV Show</string>
     <string name="not_found">Data not found</string>
     <string name="favorite">Favorite</string>
+    <string name="removed_message">Removed from Favorite</string>
+    <string name="added_message">Added to Favorite</string>
 </resources>

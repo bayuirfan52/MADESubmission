@@ -6,30 +6,23 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.adapter.TvShowRecyclerAdapter
-import com.bayuirfan.madesubmission.features.details.DetailMovieActivity
+import com.bayuirfan.madesubmission.features.details.tvshow.DetailTvShowActivity
 import com.bayuirfan.madesubmission.model.data.Discover
 import com.bayuirfan.madesubmission.model.data.TvShowModel
-import com.bayuirfan.madesubmission.model.local.LoadTvShowAsync
-import com.bayuirfan.madesubmission.model.local.TvShowOpenHelper
-import com.bayuirfan.madesubmission.utils.Constant.KEYS
-import com.bayuirfan.madesubmission.utils.Constant.LOAD_FROM_INTERNET
-import com.bayuirfan.madesubmission.utils.Constant.LOAD_FROM_LOCAL_STORAGE
-import com.bayuirfan.madesubmission.utils.Constant.TAG_STATUS
-import com.bayuirfan.madesubmission.utils.LoadDataCallback
+import com.bayuirfan.madesubmission.utils.Constant.EXTRA_DETAIL
+import com.bayuirfan.madesubmission.utils.OnItemClickCallback
 import kotlinx.android.synthetic.main.fragment_tv_show.*
 import kotlinx.android.synthetic.main.fragment_tv_show.view.*
 
-class TvShowFragment : Fragment(), TvShowRecyclerAdapter.OnItemClickCallback, LoadDataCallback<TvShowModel> {
+class TvShowFragment : Fragment(), OnItemClickCallback<TvShowModel> {
     private lateinit var adapter: TvShowRecyclerAdapter
     private var data = mutableListOf<TvShowModel>()
-    private lateinit var tvShowHelper: TvShowOpenHelper
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -39,20 +32,7 @@ class TvShowFragment : Fragment(), TvShowRecyclerAdapter.OnItemClickCallback, Lo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        when(arguments?.getInt(KEYS, 0)){
-            LOAD_FROM_INTERNET -> {
-                getTvShowData()
-            }
-            LOAD_FROM_LOCAL_STORAGE -> {
-                getTvShowLocalData()
-            }
-        }
-
-        with(activity as AppCompatActivity){
-            tvShowHelper = TvShowOpenHelper.getInstance(applicationContext)
-        }
-
+        getTvShowData()
         view.rv_tv_show.layoutManager = LinearLayoutManager(activity)
         context?.let {
             adapter = TvShowRecyclerAdapter(it, data as ArrayList<TvShowModel>, this)
@@ -83,16 +63,6 @@ class TvShowFragment : Fragment(), TvShowRecyclerAdapter.OnItemClickCallback, Lo
         }
     }
 
-    private fun getTvShowLocalData(){
-        tvShowHelper.open()
-        LoadTvShowAsync(tvShowHelper, this).execute()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        tvShowHelper.close()
-    }
-
     private fun showLoading(value: Boolean){
         if (value){
             progress_tv_show.visibility = View.VISIBLE
@@ -115,37 +85,12 @@ class TvShowFragment : Fragment(), TvShowRecyclerAdapter.OnItemClickCallback, Lo
     }
 
     private fun goToDetails(tvShowModel: TvShowModel) {
-        val intent = Intent(activity, DetailMovieActivity::class.java)
-        intent.putExtra(DetailMovieActivity.EXTRA_DETAIL, tvShowModel)
-        intent.putExtra(TAG_STATUS, 2)
+        val intent = Intent(activity, DetailTvShowActivity::class.java)
+        intent.putExtra(EXTRA_DETAIL, tvShowModel)
         startActivity(intent)
     }
 
-    override fun onPreExecute() {
-        showLoading(true)
-    }
-
-    override fun onPostExecute(list: ArrayList<TvShowModel>) {
-        showLoading(false)
-        if (list.isEmpty())
-            showError()
-        else {
-            hideError()
-            data.clear()
-            data.addAll(list)
-        }
-    }
-
-    override fun onItemClicked(tvShowModel: TvShowModel) {
-        goToDetails(tvShowModel)
-    }
-
-    companion object {
-        fun getInstance(KEY: Int): Fragment{
-            val fragment = TvShowFragment()
-            fragment.arguments?.putInt(KEYS, KEY)
-
-            return fragment
-        }
+    override fun onItemClicked(model: TvShowModel) {
+        goToDetails(model)
     }
 }

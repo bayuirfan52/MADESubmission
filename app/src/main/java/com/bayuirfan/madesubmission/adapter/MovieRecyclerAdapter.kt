@@ -9,13 +9,14 @@ import com.bayuirfan.madesubmission.BuildConfig
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.model.data.MovieModel
 import com.bayuirfan.madesubmission.utils.Constant
+import com.bayuirfan.madesubmission.utils.OnItemClickCallback
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.list_item.view.*
 
 class MovieRecyclerAdapter(
         private val context: Context,
         private val movieModels: ArrayList<MovieModel>,
-        private val callback: OnItemClickCallback) : RecyclerView.Adapter<MovieRecyclerAdapter.ViewHolder>() {
+        private val callback: OnItemClickCallback<MovieModel>) : RecyclerView.Adapter<MovieRecyclerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder =
             ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_item, viewGroup, false))
@@ -37,9 +38,5 @@ class MovieRecyclerAdapter(
                 callback.onItemClicked(movieModels)
             }
         }
-    }
-
-    interface OnItemClickCallback {
-        fun onItemClicked(movieModels: MovieModel)
     }
 }

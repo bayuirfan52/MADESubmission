@@ -6,13 +6,13 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.bayuirfan.madesubmission"
-        minSdkVersion 14
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        buildConfigField "String","BASE_URL","\"https://api.themoviedb.org/3/\""
-        buildConfigField "String","API_KEY","\"2f1feaf855a30dca4d09a1c1f103b705\""
-        buildConfigField "String","POSTER_BASE_URL","\"https://image.tmdb.org/t/p/\""
+        buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
+        buildConfigField "String", "API_KEY", "\"2f1feaf855a30dca4d09a1c1f103b705\""
+        buildConfigField "String", "POSTER_BASE_URL", "\"https://image.tmdb.org/t/p/\""
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -25,6 +25,10 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
+}
+
+androidExtensions{
+    experimental = true
 }
 
 dependencies {
@@ -45,6 +49,9 @@ dependencies {
     implementation 'io.reactivex:rxandroid:1.2.1'
     implementation 'com.squareup.retrofit2:adapter-rxjava:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation "org.jetbrains.anko:anko:$anko_version"
+    implementation "org.jetbrains.anko:anko-sqlite:$anko_version"
+    //noinspection LifecycleAnnotationProcessorWithJava8
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
 
     //Testing

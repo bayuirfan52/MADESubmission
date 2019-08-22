@@ -9,9 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.adapter.MainPagerAdapter
-import com.bayuirfan.madesubmission.features.dashboard.movie.MovieFragment
-import com.bayuirfan.madesubmission.features.dashboard.tvshow.TvShowFragment
-import com.bayuirfan.madesubmission.utils.Constant.LOAD_FROM_LOCAL_STORAGE
+import com.bayuirfan.madesubmission.features.favorites.movie.MovieFavoriteFragment
+import com.bayuirfan.madesubmission.features.favorites.tvshow.TVShowFavoriteFragment
 import kotlinx.android.synthetic.main.fragment_favorite.*
 
 class FavoriteFragment : Fragment() {
@@ -27,8 +26,8 @@ class FavoriteFragment : Fragment() {
 
         with(activity as AppCompatActivity){
             val adapter = MainPagerAdapter(supportFragmentManager)
-            adapter.add(MovieFragment.getInstance(LOAD_FROM_LOCAL_STORAGE), resources.getString(R.string.movie))
-            adapter.add(TvShowFragment.getInstance(LOAD_FROM_LOCAL_STORAGE), resources.getString(R.string.tv_show))
+            adapter.add(MovieFavoriteFragment(), resources.getString(R.string.movie))
+            adapter.add(TVShowFavoriteFragment(), resources.getString(R.string.tv_show))
             vp_favorite.adapter = adapter
             tl_favorite.setupWithViewPager(vp_favorite)
         }

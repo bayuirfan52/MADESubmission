@@ -2,11 +2,10 @@ package com.bayuirfan.madesubmission.adapter
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.app.FragmentStatePagerAdapter
+import java.util.*
 
-import java.util.ArrayList
-
-class MainPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class MainPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
     private val fragments = ArrayList<Fragment>()
     private val title = ArrayList<String>()

@@ -2,7 +2,6 @@ package com.bayuirfan.madesubmission.model.local
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteOpenHelper
 import com.bayuirfan.madesubmission.utils.Constant.BACKDROP_PATH
 import com.bayuirfan.madesubmission.utils.Constant.DATABASE_NAME
 import com.bayuirfan.madesubmission.utils.Constant.DATABASE_VERSION
@@ -17,43 +16,48 @@ import com.bayuirfan.madesubmission.utils.Constant.RELEASE_DATE
 import com.bayuirfan.madesubmission.utils.Constant.TITLE
 import com.bayuirfan.madesubmission.utils.Constant.TV_SHOW_TABLE
 import com.bayuirfan.madesubmission.utils.Constant.VOTE_AVERAGE
+import org.jetbrains.anko.db.*
 
-class DatabaseCatalogueOpenHelper(context: Context) : SQLiteOpenHelper(
-        context, DATABASE_NAME, null, DATABASE_VERSION) {
+class DatabaseCatalogueOpenHelper(context: Context): ManagedSQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION){
+    companion object{
+        private var instance: DatabaseCatalogueOpenHelper? = null
 
-    companion object {
-        private const val SQL_CREATE_MOVIE = "CREATE TABLE $MOVIE_TABLE (" +
-                "$ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "$ID_DATA INTEGER UNIQUE, " +
-                "$TITLE TEXT NOT NULL, " +
-                "$POSTER_PATH TEXT, " +
-                "$BACKDROP_PATH TEXT, " +
-                "$RELEASE_DATE TEXT, " +
-                "$VOTE_AVERAGE TEXT, " +
-                "$OVERVIEW TEXT" +
-                ")"
-
-        private const val SQL_CREATE_TV_SHOW = "CREATE TABLE $TV_SHOW_TABLE (" +
-                "$ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "$ID_DATA INTEGER UNIQUE, " +
-                "$NAME TEXT NOT NULL, " +
-                "$POSTER_PATH TEXT, " +
-                "$BACKDROP_PATH TEXT, " +
-                "$FIRST_AIR_DATE TEXT, " +
-                "$VOTE_AVERAGE TEXT, " +
-                "$OVERVIEW TEXT" +
-                ")"
-
-        private const val DROP_TABLE = "DROP TABLE IF EXISTS"
+        @Synchronized
+        fun getInstance(context: Context): DatabaseCatalogueOpenHelper{
+            if (instance == null){
+                instance = DatabaseCatalogueOpenHelper(context.applicationContext)
+            }
+            return instance as DatabaseCatalogueOpenHelper
+        }
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
-        db?.execSQL(SQL_CREATE_MOVIE)
-        db?.execSQL(SQL_CREATE_TV_SHOW)
+        db?.createTable(MOVIE_TABLE, true,
+                ID to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
+                ID_DATA to INTEGER + UNIQUE,
+                TITLE to TEXT,
+                POSTER_PATH to TEXT,
+                BACKDROP_PATH to TEXT,
+                VOTE_AVERAGE to TEXT,
+                OVERVIEW to TEXT,
+                RELEASE_DATE to TEXT)
+
+        db?.createTable(TV_SHOW_TABLE, true,
+                ID to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
+                ID_DATA to INTEGER + UNIQUE,
+                NAME to TEXT,
+                POSTER_PATH to TEXT,
+                BACKDROP_PATH to TEXT,
+                VOTE_AVERAGE to TEXT,
+                OVERVIEW to TEXT,
+                FIRST_AIR_DATE to TEXT)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        db?.execSQL("$DROP_TABLE $MOVIE_TABLE")
-        db?.execSQL("$DROP_TABLE $TV_SHOW_TABLE")
+        db?.dropTable(MOVIE_TABLE, true)
+        db?.dropTable(TV_SHOW_TABLE, true)
     }
 }
+
+val Context.database: DatabaseCatalogueOpenHelper
+    get() = DatabaseCatalogueOpenHelper.getInstance(applicationContext)

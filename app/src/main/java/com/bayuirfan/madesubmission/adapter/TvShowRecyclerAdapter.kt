@@ -9,13 +9,14 @@ import com.bayuirfan.madesubmission.BuildConfig
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.model.data.TvShowModel
 import com.bayuirfan.madesubmission.utils.Constant
+import com.bayuirfan.madesubmission.utils.OnItemClickCallback
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.list_item.view.*
 
 class TvShowRecyclerAdapter(
         private val context: Context,
         private val tvShowModel: ArrayList<TvShowModel>,
-        private val callback: OnItemClickCallback) : RecyclerView.Adapter<TvShowRecyclerAdapter.ViewHolder>() {
+        private val callback: OnItemClickCallback<TvShowModel>) : RecyclerView.Adapter<TvShowRecyclerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder =
             ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_item, viewGroup, false))
@@ -38,9 +39,5 @@ class TvShowRecyclerAdapter(
                 callback.onItemClicked(tvShowModel)
             }
         }
-    }
-
-    interface OnItemClickCallback {
-        fun onItemClicked(tvShowModel: TvShowModel)
     }
 }

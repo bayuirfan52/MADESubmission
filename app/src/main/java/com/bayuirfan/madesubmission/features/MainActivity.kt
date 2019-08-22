@@ -11,7 +11,6 @@ import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.features.dashboard.movie.MovieFragment
 import com.bayuirfan.madesubmission.features.dashboard.tvshow.TvShowFragment
 import com.bayuirfan.madesubmission.features.favorites.FavoriteFragment
-import com.bayuirfan.madesubmission.utils.Constant.LOAD_FROM_INTERNET
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -24,10 +23,10 @@ class MainActivity : AppCompatActivity() {
             item ->
             when(item.itemId){
                 R.id.menu_movie -> {
-                    setFragment(MovieFragment.getInstance(LOAD_FROM_INTERNET), savedInstanceState)
+                    setFragment(MovieFragment(), savedInstanceState)
                 }
                 R.id.menu_tv_show -> {
-                    setFragment(TvShowFragment.getInstance(LOAD_FROM_INTERNET), savedInstanceState)
+                    setFragment(TvShowFragment(), savedInstanceState)
                 }
                 R.id.menu_favorite -> {
                     setFragment(FavoriteFragment(), savedInstanceState)

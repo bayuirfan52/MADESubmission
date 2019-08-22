@@ -1,13 +1,9 @@
 package com.bayuirfan.madesubmission.utils
 
 object Constant {
-    const val TAG_STATUS = "status"
     const val IMG_W185 = "w185"
-
-    // Keys
-    const val KEYS = "keys"
-    const val LOAD_FROM_INTERNET = 0x1
-    const val LOAD_FROM_LOCAL_STORAGE = 0x2
+    const val EXTRA_STATE = "extra_state"
+    const val EXTRA_DETAIL = "extra_detail"
 
     // Database
     const val DATABASE_VERSION = 1

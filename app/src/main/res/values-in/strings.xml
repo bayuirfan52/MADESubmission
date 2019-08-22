@@ -17,4 +17,6 @@
     <string name="detail_tv_show">Detail Acara TV</string>
     <string name="not_found">Data tidak ditemukan</string>
     <string name="favorite">Favorit</string>
+    <string name="removed_message">Dihapus dari favorit</string>
+    <string name="added_message">Ditambahkan ke favorit</string>
 </resources>

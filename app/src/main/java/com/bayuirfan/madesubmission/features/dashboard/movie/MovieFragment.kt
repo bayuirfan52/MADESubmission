@@ -5,30 +5,23 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.adapter.MovieRecyclerAdapter
-import com.bayuirfan.madesubmission.features.details.DetailMovieActivity
+import com.bayuirfan.madesubmission.features.details.movie.DetailMovieActivity
 import com.bayuirfan.madesubmission.model.data.Discover
 import com.bayuirfan.madesubmission.model.data.MovieModel
-import com.bayuirfan.madesubmission.model.local.LoadMovieAsync
-import com.bayuirfan.madesubmission.model.local.MovieOpenHelper
-import com.bayuirfan.madesubmission.utils.Constant
-import com.bayuirfan.madesubmission.utils.Constant.KEYS
-import com.bayuirfan.madesubmission.utils.Constant.LOAD_FROM_INTERNET
-import com.bayuirfan.madesubmission.utils.Constant.LOAD_FROM_LOCAL_STORAGE
-import com.bayuirfan.madesubmission.utils.LoadDataCallback
+import com.bayuirfan.madesubmission.utils.Constant.EXTRA_DETAIL
+import com.bayuirfan.madesubmission.utils.OnItemClickCallback
 import kotlinx.android.synthetic.main.fragment_movie.*
 import kotlinx.android.synthetic.main.fragment_movie.view.*
 
-class MovieFragment : Fragment(), MovieRecyclerAdapter.OnItemClickCallback, LoadDataCallback<MovieModel> {
+class MovieFragment : Fragment(), OnItemClickCallback<MovieModel> {
     private lateinit var adapter: MovieRecyclerAdapter
     private var movieModel = mutableListOf<MovieModel>()
-    private lateinit var movieOpenHelper: MovieOpenHelper
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
@@ -36,21 +29,7 @@ class MovieFragment : Fragment(), MovieRecyclerAdapter.OnItemClickCallback, Load
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        when(arguments?.getInt(KEYS, 0)){
-            LOAD_FROM_INTERNET -> {
-                getMovieData()
-            }
-
-            LOAD_FROM_LOCAL_STORAGE -> {
-                getMovieLocalData()
-            }
-        }
-
-        with(activity as AppCompatActivity){
-            movieOpenHelper = MovieOpenHelper.getInstance(applicationContext)
-        }
-
+        getMovieData()
         view.rv_movie.layoutManager = LinearLayoutManager(context)
         context?.let {
             adapter = MovieRecyclerAdapter(it, movieModel as ArrayList<MovieModel>,this)
@@ -81,11 +60,6 @@ class MovieFragment : Fragment(), MovieRecyclerAdapter.OnItemClickCallback, Load
         }
     }
 
-    private fun getMovieLocalData(){
-        movieOpenHelper.open()
-        LoadMovieAsync(movieOpenHelper, this).execute()
-    }
-
     private fun showError(){
         iv_not_found.visibility = View.VISIBLE
         tv_not_found.visibility = View.VISIBLE
@@ -109,36 +83,11 @@ class MovieFragment : Fragment(), MovieRecyclerAdapter.OnItemClickCallback, Load
 
     private fun goToDetails(movieModel: MovieModel) {
         val intent = Intent(activity, DetailMovieActivity::class.java)
-        intent.putExtra(DetailMovieActivity.EXTRA_DETAIL, movieModel)
-        intent.putExtra(Constant.TAG_STATUS, 1)
+        intent.putExtra(EXTRA_DETAIL, movieModel)
         startActivity(intent)
     }
 
-    override fun onPreExecute() {
-        showLoading(true)
-    }
-
-    override fun onPostExecute(list: ArrayList<MovieModel>) {
-        showLoading(false)
-        if (list.isEmpty())
-            showError()
-        else {
-            hideError()
-            movieModel.clear()
-            movieModel.addAll(list)
-        }
-    }
-
-    override fun onItemClicked(movieModels: MovieModel) {
-        goToDetails(movieModels)
-    }
-
-    companion object {
-        fun getInstance(KEY: Int): Fragment{
-            val fragment = MovieFragment()
-            fragment.arguments?.putInt(KEYS, KEY)
-
-            return fragment
-        }
+    override fun onItemClicked(model: MovieModel) {
+        goToDetails(model)
     }
 }

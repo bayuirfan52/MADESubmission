@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.bayuirfan.madesubmission">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,8 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".features.details.DetailMovieActivity" />
-        <activity android:name=".features.MainActivity"
+        <activity android:name=".features.details.tvshow.DetailTvShowActivity"/>
+        <activity android:name=".features.details.movie.DetailMovieActivity" />
+        <activity
+            android:name=".features.MainActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,5 +24,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>
