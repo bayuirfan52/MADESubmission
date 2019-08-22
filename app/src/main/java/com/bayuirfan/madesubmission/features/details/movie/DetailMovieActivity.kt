@@ -23,6 +23,7 @@ import com.bayuirfan.madesubmission.utils.Constant.POSTER_PATH
 import com.bayuirfan.madesubmission.utils.Constant.RELEASE_DATE
 import com.bayuirfan.madesubmission.utils.Constant.TITLE
 import com.bayuirfan.madesubmission.utils.Constant.VOTE_AVERAGE
+import com.bayuirfan.madesubmission.utils.FormatDate
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_detail_movie.*
 import org.jetbrains.anko.db.classParser
@@ -127,7 +128,7 @@ class DetailMovieActivity : AppCompatActivity(){
                 .into(img_detail)
 
         tv_title_detail.text = data?.title
-        tv_aired_detail.text = data?.releaseDate
+        tv_aired_detail.text = data?.releaseDate?.let { FormatDate.reformatDate(it) }
         tv_score_detail.text = data?.voteAverage
         tv_description_detail.text = data?.overview
         data?.let {
@@ -143,8 +144,8 @@ class DetailMovieActivity : AppCompatActivity(){
                     TITLE to data?.title,
                     POSTER_PATH to data?.posterPath,
                     BACKDROP_PATH to data?.backdropPath,
-                    VOTE_AVERAGE to data?.voteAverage,
                     OVERVIEW to data?.overview,
+                    VOTE_AVERAGE to data?.voteAverage,
                     RELEASE_DATE to data?.releaseDate)
         }
         showSnackbarMessage(getString(R.string.added_message))

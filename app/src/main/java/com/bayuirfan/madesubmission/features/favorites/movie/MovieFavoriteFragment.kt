@@ -16,7 +16,6 @@ import com.bayuirfan.madesubmission.features.dashboard.movie.MovieViewModel
 import com.bayuirfan.madesubmission.features.details.movie.DetailMovieActivity
 import com.bayuirfan.madesubmission.model.data.MovieModel
 import com.bayuirfan.madesubmission.utils.Constant.EXTRA_DETAIL
-import com.bayuirfan.madesubmission.utils.Constant.EXTRA_STATE
 import com.bayuirfan.madesubmission.utils.OnItemClickCallback
 import kotlinx.android.synthetic.main.fragment_movie_favorite.*
 import kotlinx.android.synthetic.main.fragment_movie_favorite.view.*
@@ -41,13 +40,6 @@ class MovieFavoriteFragment : Fragment(), OnItemClickCallback<MovieModel> {
         }
         view.rv_movie_favorite.adapter = adapter
         view.rv_movie_favorite.setHasFixedSize(true)
-
-        if (savedInstanceState == null){
-            getFavoriteData()
-        } else {
-            data.clear()
-            data.addAll(savedInstanceState.getParcelableArrayList(EXTRA_STATE))
-        }
     }
 
     private fun getFavoriteData(){
@@ -59,7 +51,7 @@ class MovieFavoriteFragment : Fragment(), OnItemClickCallback<MovieModel> {
     private val getMovieList : Observer<ArrayList<MovieModel>> = Observer { data ->
         showLoading(false)
         if (data != null){
-            if (data.size < 0){
+            if (data.size == 0){
                 showError()
             } else {
                 this.data.clear()
@@ -79,7 +71,7 @@ class MovieFavoriteFragment : Fragment(), OnItemClickCallback<MovieModel> {
 
     private fun showError(){
         iv_not_found_favorite.visibility = View.VISIBLE
-        iv_not_found_favorite.visibility = View.VISIBLE
+        tv_not_found_favorite.visibility = View.VISIBLE
         rv_movie_favorite.visibility = View.GONE
     }
 

@@ -2,7 +2,6 @@ package com.bayuirfan.madesubmission.utils
 
 object Constant {
     const val IMG_W185 = "w185"
-    const val EXTRA_STATE = "extra_state"
     const val EXTRA_DETAIL = "extra_detail"
 
     // Database

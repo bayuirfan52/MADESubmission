@@ -24,6 +24,7 @@ import com.bayuirfan.madesubmission.utils.Constant.OVERVIEW
 import com.bayuirfan.madesubmission.utils.Constant.POSTER_PATH
 import com.bayuirfan.madesubmission.utils.Constant.TV_SHOW_TABLE
 import com.bayuirfan.madesubmission.utils.Constant.VOTE_AVERAGE
+import com.bayuirfan.madesubmission.utils.FormatDate
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_detail_tv_show.*
 import org.jetbrains.anko.db.classParser
@@ -123,7 +124,7 @@ class DetailTvShowActivity : AppCompatActivity(){
                     .load("${BuildConfig.POSTER_BASE_URL}$IMG_W185${it.posterPath}")
                     .into(img_detail)
             tv_title_detail.text = it.name
-            tv_aired_detail.text = it.firstAirDate
+            tv_aired_detail.text = it.firstAirDate?.let { it1 -> FormatDate.reformatDate(it1) }
             tv_score_detail.text = it.voteAverage
             tv_description_detail.text = it.overview
             checkIsFavorite(it)
@@ -138,8 +139,8 @@ class DetailTvShowActivity : AppCompatActivity(){
                     NAME to data?.name,
                     POSTER_PATH to data?.posterPath,
                     BACKDROP_PATH to data?.backdropPath,
-                    VOTE_AVERAGE to data?.voteAverage,
                     OVERVIEW to data?.overview,
+                    VOTE_AVERAGE to data?.voteAverage,
                     FIRST_AIR_DATE to data?.firstAirDate)
         }
         showSnackbarMessage(getString(R.string.added_message))

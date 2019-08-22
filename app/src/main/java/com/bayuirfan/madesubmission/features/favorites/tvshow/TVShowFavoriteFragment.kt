@@ -16,7 +16,6 @@ import com.bayuirfan.madesubmission.features.dashboard.tvshow.TvShowViewModel
 import com.bayuirfan.madesubmission.features.details.tvshow.DetailTvShowActivity
 import com.bayuirfan.madesubmission.model.data.TvShowModel
 import com.bayuirfan.madesubmission.utils.Constant.EXTRA_DETAIL
-import com.bayuirfan.madesubmission.utils.Constant.EXTRA_STATE
 import com.bayuirfan.madesubmission.utils.OnItemClickCallback
 import kotlinx.android.synthetic.main.fragment_tvshow_favorite.*
 import kotlinx.android.synthetic.main.fragment_tvshow_favorite.view.*
@@ -39,13 +38,6 @@ class TVShowFavoriteFragment : Fragment(), OnItemClickCallback<TvShowModel> {
         }
         view.rv_tv_show_favorite.adapter = adapter
         view.rv_tv_show_favorite.setHasFixedSize(true)
-
-        if (savedInstanceState == null){
-            getFavoriteData()
-        } else {
-            data.clear()
-            data.addAll(savedInstanceState.getParcelableArrayList(EXTRA_STATE))
-        }
     }
 
     override fun onResume() {

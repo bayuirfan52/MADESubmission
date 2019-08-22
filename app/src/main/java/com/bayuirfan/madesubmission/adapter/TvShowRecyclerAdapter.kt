@@ -9,6 +9,7 @@ import com.bayuirfan.madesubmission.BuildConfig
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.model.data.TvShowModel
 import com.bayuirfan.madesubmission.utils.Constant
+import com.bayuirfan.madesubmission.utils.FormatDate
 import com.bayuirfan.madesubmission.utils.OnItemClickCallback
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.list_item.view.*
@@ -30,7 +31,7 @@ class TvShowRecyclerAdapter(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(tvShowModel: TvShowModel){
             itemView.tv_title_list.text = tvShowModel.name
-            itemView.tv_aired_list.text = tvShowModel.firstAirDate
+            itemView.tv_aired_list.text = tvShowModel.firstAirDate?.let { FormatDate.reformatDate(it) }
             Glide.with(context)
                     .load("${BuildConfig.POSTER_BASE_URL}${Constant.IMG_W185}${tvShowModel.posterPath}")
                     .into(itemView.img_list)

@@ -38,8 +38,8 @@ class DatabaseCatalogueOpenHelper(context: Context): ManagedSQLiteOpenHelper(con
                 TITLE to TEXT,
                 POSTER_PATH to TEXT,
                 BACKDROP_PATH to TEXT,
-                VOTE_AVERAGE to TEXT,
                 OVERVIEW to TEXT,
+                VOTE_AVERAGE to TEXT,
                 RELEASE_DATE to TEXT)
 
         db?.createTable(TV_SHOW_TABLE, true,
@@ -48,8 +48,8 @@ class DatabaseCatalogueOpenHelper(context: Context): ManagedSQLiteOpenHelper(con
                 NAME to TEXT,
                 POSTER_PATH to TEXT,
                 BACKDROP_PATH to TEXT,
-                VOTE_AVERAGE to TEXT,
                 OVERVIEW to TEXT,
+                VOTE_AVERAGE to TEXT,
                 FIRST_AIR_DATE to TEXT)
     }
 
