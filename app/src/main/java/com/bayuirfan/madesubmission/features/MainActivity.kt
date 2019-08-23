@@ -34,7 +34,9 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-        bottom_navigation_view.selectedItemId = R.id.menu_movie
+
+        if (savedInstanceState == null)
+            bottom_navigation_view.selectedItemId = R.id.menu_movie
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
