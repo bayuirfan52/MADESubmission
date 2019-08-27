@@ -13,8 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".features.dashboard.search.SearchActivity"/>
-        <activity android:name=".features.setting.SettingsActivity" />
+        <activity android:name=".features.dashboard.search.SearchTvShowActivity"
+            android:theme="@style/Theme.Design.NoActionBar"/>
+        <activity android:name=".features.dashboard.search.SearchMovieActivity"
+            android:theme="@style/Theme.Design.NoActionBar"/>
+        <activity android:name=".features.settings.SettingsActivity" />
         <activity android:name=".features.details.tvshow.DetailTvShowActivity" />
         <activity android:name=".features.details.movie.DetailMovieActivity" />
         <activity

@@ -2,7 +2,6 @@ package com.bayuirfan.madesubmission.features
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
@@ -11,6 +10,7 @@ import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.features.dashboard.movie.MovieFragment
 import com.bayuirfan.madesubmission.features.dashboard.tvshow.TvShowFragment
 import com.bayuirfan.madesubmission.features.favorites.FavoriteFragment
+import com.bayuirfan.madesubmission.features.settings.SettingsActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_settings) {
-            val intent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+            val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
         }

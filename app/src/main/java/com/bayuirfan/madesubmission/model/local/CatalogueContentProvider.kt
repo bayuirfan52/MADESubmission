@@ -1,0 +1,3 @@
+package com.bayuirfan.madesubmission.model.local
+
+class CatalogueContentProvider

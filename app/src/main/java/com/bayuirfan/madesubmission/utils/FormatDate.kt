@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object FormatDate {
+    @Suppress("SameParameterValue")
     private fun formatDate(date: String, format: String): String{
         var result = ""
         val oldDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())

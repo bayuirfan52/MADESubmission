@@ -19,4 +19,10 @@
     <string name="favorite">Favorit</string>
     <string name="removed_message">Dihapus dari favorit</string>
     <string name="added_message">Ditambahkan ke favorit</string>
+    <string name="daily_reminder">Pengingat Harian</string>
+    <string name="daily_reminder_information">Ini akan mengirimkan pengingat setiap 7 jam</string>
+    <string name="release_today_reminder">Rilis Hari Ini</string>
+    <string name="release_today_reminder_information">Ini akan mengirimkan informasi rilis terbaru</string>
+    <string name="language">Bahasa</string>
+    <string name="language_information">Ubah bahasa yang digunakan ponsel</string>
 </resources>
