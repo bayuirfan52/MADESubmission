@@ -4,6 +4,7 @@
     package="com.bayuirfan.madesubmission">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".features.details.tvshow.DetailTvShowActivity"/>
+        <activity android:name=".features.dashboard.search.SearchActivity"/>
+        <activity android:name=".features.setting.SettingsActivity" />
+        <activity android:name=".features.details.tvshow.DetailTvShowActivity" />
         <activity android:name=".features.details.movie.DetailMovieActivity" />
         <activity
             android:name=".features.MainActivity"
@@ -23,5 +26,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".features.widget.CatalogueWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/catalouge_widget_info" />
+        </receiver>
     </application>
+
 </manifest>
