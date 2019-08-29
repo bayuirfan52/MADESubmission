@@ -1,11 +1,11 @@
 package com.bayuirfan.madesubmission.features.widget
 
-import android.appwidget.AppWidgetManager
-import android.appwidget.AppWidgetProvider
-import android.content.Context
+import android.appwidget.*
+import android.content.*
+import android.net.Uri
 import android.widget.RemoteViews
-
 import com.bayuirfan.madesubmission.R
+import com.bayuirfan.madesubmission.services.StackWidgetService
 
 /**
  * Implementation of App Widget functionality.
@@ -27,19 +27,35 @@ class CatalogueWidget : AppWidgetProvider() {
         // Enter relevant functionality for when the last widget is disabled
     }
 
+    override fun onReceive(context: Context?, intent: Intent?) {
+        super.onReceive(context, intent)
+        if (intent?.action != null){
+            if (intent.action == LIST_ACTION){
+                return
+            }
+        }
+    }
+
     companion object {
 
         internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager,
                                      appWidgetId: Int) {
-
-            val widgetText = context.getString(R.string.app_name)
+            val intent = Intent(context, StackWidgetService::class.java)
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+            intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
             // Construct the RemoteViews object
-            val views = RemoteViews(context.packageName, R.layout.catalouge_widget)
-            views.setTextViewText(R.id.appwidget_text, widgetText)
+            val views = RemoteViews(context.packageName, R.layout.catalogue_widget)
+            views.setRemoteAdapter(R.id.stack_view, intent)
+            views.setEmptyView(R.id.stack_view, R.id.empty_view)
+
+
 
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
+
+        const val EXTRA_ITEM = "com.bayuirfan.madesubmission.EXTRA_ITEM"
+        const val LIST_ACTION = "com.bayuirfan.madesubmission.LIST_ACTION"
     }
 }
 

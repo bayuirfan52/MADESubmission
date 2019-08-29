@@ -1,5 +1,5 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">Movie Catalouge</string>
+    <string name="app_name">Katalog</string>
     <string name="overview">Ikhtisar</string>
     <string name="title_sample">Contoh Judul</string>
     <string name="aired_sample">Tayang</string>
@@ -25,4 +25,5 @@
     <string name="release_today_reminder_information">Ini akan mengirimkan informasi rilis terbaru</string>
     <string name="language">Bahasa</string>
     <string name="language_information">Ubah bahasa yang digunakan ponsel</string>
+    <string name="search">Cari</string>
 </resources>

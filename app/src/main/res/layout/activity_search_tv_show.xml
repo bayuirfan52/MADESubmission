@@ -6,20 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".features.dashboard.search.SearchTvShowActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar_search"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            />
-    </android.support.design.widget.AppBarLayout>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_search"
         android:layout_width="0dp"
@@ -27,7 +13,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_bar_search"
+        app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/list_item" />
 
     <ProgressBar
@@ -39,5 +25,35 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_src_not_found"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/not_found"
+        android:src="@drawable/ic_not_found"
+        app:layout_constraintBottom_toTopOf="@+id/tv_src_not_found"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_src_not_found"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="@string/not_found"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone" />
 
 </android.support.constraint.ConstraintLayout>

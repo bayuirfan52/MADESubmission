@@ -1,5 +1,5 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">Movie Catalogue</string>
+    <string name="app_name">The Catalogue</string>
     <string name="overview">Overview</string>
     <string name="title_sample">Title Sample</string>
     <string name="aired_sample">Aired</string>
@@ -25,4 +25,5 @@
     <string name="release_today_reminder_information">This will send the latest release information</string>
     <string name="language">Language</string>
     <string name="language_information">Change your phone language</string>
+    <string name="search">Search</string>
 </resources>

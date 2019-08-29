@@ -1,20 +1,17 @@
 package com.bayuirfan.madesubmission.features.dashboard.tvshow
 
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import android.arch.lifecycle.*
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.adapter.TvShowRecyclerAdapter
+import com.bayuirfan.madesubmission.features.dashboard.search.SearchTvShowActivity
 import com.bayuirfan.madesubmission.features.details.tvshow.DetailTvShowActivity
-import com.bayuirfan.madesubmission.model.data.Discover
-import com.bayuirfan.madesubmission.model.data.TvShowModel
+import com.bayuirfan.madesubmission.model.data.*
 import com.bayuirfan.madesubmission.utils.Constant.EXTRA_DETAIL
 import com.bayuirfan.madesubmission.utils.OnItemClickCallback
 import kotlinx.android.synthetic.main.fragment_tv_show.*
@@ -39,6 +36,11 @@ class TvShowFragment : Fragment(), OnItemClickCallback<TvShowModel> {
         }
         view.rv_tv_show.adapter = adapter
         view.rv_tv_show.setHasFixedSize(true)
+
+        fab_search_tv_show.setOnClickListener {
+            val intent = Intent(context, SearchTvShowActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun getTvShowData(){

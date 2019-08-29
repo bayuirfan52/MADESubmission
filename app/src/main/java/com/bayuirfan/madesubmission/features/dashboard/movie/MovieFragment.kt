@@ -1,19 +1,16 @@
 package com.bayuirfan.madesubmission.features.dashboard.movie
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import android.arch.lifecycle.*
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.adapter.MovieRecyclerAdapter
+import com.bayuirfan.madesubmission.features.dashboard.search.SearchMovieActivity
 import com.bayuirfan.madesubmission.features.details.movie.DetailMovieActivity
-import com.bayuirfan.madesubmission.model.data.Discover
-import com.bayuirfan.madesubmission.model.data.MovieModel
+import com.bayuirfan.madesubmission.model.data.*
 import com.bayuirfan.madesubmission.utils.Constant.EXTRA_DETAIL
 import com.bayuirfan.madesubmission.utils.OnItemClickCallback
 import kotlinx.android.synthetic.main.fragment_movie.*
@@ -36,6 +33,11 @@ class MovieFragment : Fragment(), OnItemClickCallback<MovieModel> {
         }
         view.rv_movie.adapter = adapter
         view.rv_movie.setHasFixedSize(true)
+
+        fab_search_movie.setOnClickListener {
+            val intent = Intent(context, SearchMovieActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun getMovieData(){

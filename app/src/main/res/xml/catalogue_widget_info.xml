@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:initialKeyguardLayout="@layout/catalouge_widget"
-    android:initialLayout="@layout/catalouge_widget"
+    android:initialKeyguardLayout="@layout/catalogue_widget"
+    android:initialLayout="@layout/catalogue_widget"
     android:minWidth="250dp"
     android:minHeight="110dp"
     android:previewImage="@drawable/example_appwidget_preview"
     android:resizeMode="horizontal|vertical"
-    android:updatePeriodMillis="86400000"
+    android:updatePeriodMillis="0"
     android:widgetCategory="home_screen"/>

@@ -1,11 +1,8 @@
 package com.bayuirfan.madesubmission.model.remote
 
 import com.bayuirfan.madesubmission.BuildConfig
-import com.bayuirfan.madesubmission.model.data.Discover
-import com.bayuirfan.madesubmission.model.data.MovieModel
-import com.bayuirfan.madesubmission.model.data.TvShowModel
-import retrofit2.http.GET
-import retrofit2.http.Query
+import com.bayuirfan.madesubmission.model.data.*
+import retrofit2.http.*
 import rx.Observable
 
 interface MovieCatalogueInterface {
@@ -21,7 +18,7 @@ interface MovieCatalogueInterface {
     fun searchMovieWithName(@Query("query") movieName: String) : Observable<Discover<MovieModel>>
 
     @GET("search/tv?api_key=${BuildConfig.API_KEY}&language=en-US")
-    fun searchTvShowWithName(@Query("query") tvShowName: String) : Observable<Discover<MovieModel>>
+    fun searchTvShowWithName(@Query("query") tvShowName: String) : Observable<Discover<TvShowModel>>
 
     // ----- Release -----
     @GET("discover/movie?api_key=${BuildConfig.API_KEY}&language=en-US&include_adult=false")
