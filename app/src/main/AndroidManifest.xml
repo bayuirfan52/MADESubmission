@@ -4,6 +4,8 @@
     package="com.bayuirfan.madesubmission">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -13,8 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".features.dashboard.search.SearchTvShowActivity"/>
-        <activity android:name=".features.dashboard.search.SearchMovieActivity"/>
+        <activity android:name=".features.dashboard.search.SearchTvShowActivity" />
+
+        <activity android:name=".features.dashboard.search.SearchMovieActivity" />
         <activity android:name=".features.settings.SettingsActivity" />
         <activity android:name=".features.details.tvshow.DetailTvShowActivity" />
         <activity android:name=".features.details.movie.DetailMovieActivity" />
@@ -28,16 +31,34 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".features.widget.CatalogueWidget">
+        <receiver android:name=".features.widget.TvShowCatalogueWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/catalogue_widget_info" />
+                android:resource="@xml/tv_show_catalogue_widget_info" />
         </receiver>
-        <receiver android:name=".services.SchedulerService" />
+
+        <receiver android:name=".features.widget.MovieCatalogueWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/movie_catalogue_widget_info" />
+        </receiver>
+
+        <receiver android:name=".services.SchedulerReceiver" />
+
+        <service
+            android:name=".services.MovieStackWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <service
+            android:name=".services.TvShowStackWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
     </application>
 
 </manifest>

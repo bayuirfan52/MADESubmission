@@ -26,4 +26,6 @@
     <string name="language">Language</string>
     <string name="language_information">Change your phone language</string>
     <string name="search">Search</string>
+    <string name="favorite_movie">Favorite Movies</string>
+    <string name="tv_show_favorite">TV Show Favorite</string>
 </resources>

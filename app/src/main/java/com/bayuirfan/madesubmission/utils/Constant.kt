@@ -23,4 +23,8 @@ object Constant {
     const val RELEASE_DATE = "RELEASE_DATE"
     const val FIRST_AIR_DATE = "FIRST_AIR_DATE"
     const val ID_DATA = "ID"
+
+    // Widgets
+    const val EXTRA_ITEM = "com.bayuirfan.madesubmission.EXTRA_ITEM"
+    const val LIST_ACTION = "com.bayuirfan.madesubmission.LIST_ACTION"
 }

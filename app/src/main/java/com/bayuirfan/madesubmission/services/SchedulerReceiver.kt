@@ -2,7 +2,7 @@ package com.bayuirfan.madesubmission.services
 
 import android.content.*
 
-class SchedulerService: BroadcastReceiver() {
+class SchedulerReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         
     }
