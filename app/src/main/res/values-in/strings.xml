@@ -20,7 +20,7 @@
     <string name="removed_message">Dihapus dari favorit</string>
     <string name="added_message">Ditambahkan ke favorit</string>
     <string name="daily_reminder">Pengingat Harian</string>
-    <string name="daily_reminder_information">Ini akan mengirimkan pengingat setiap 7 jam</string>
+    <string name="daily_reminder_information">Ini akan mengirimkan pengingat setiap jam 7</string>
     <string name="release_today_reminder">Rilis Hari Ini</string>
     <string name="release_today_reminder_information">Ini akan mengirimkan informasi rilis terbaru</string>
     <string name="language">Bahasa</string>
@@ -28,4 +28,10 @@
     <string name="search">Cari</string>
     <string name="favorite_movie">Film Favorit</string>
     <string name="tv_show_favorite">Acara TV Favorit</string>
+    <string name="daily_reminder_active">Pengingat Harian Anda Telah Aktif</string>
+    <string name="daily_reminder_not_active">Pengingat Harian Anda Telah Non Aktif</string>
+    <string name="daily_reminder_message">Hai. Periksa lagi update film dan acara tv terbaru</string>
+    <string name="release_reminder_active">Pengingat Rilis Terbaru telah Aktif</string>
+    <string name="release_reminder_not_active">Pengingat Rilis Terbaru Telah Non Aktif</string>
+    <string name="release_reminder_message">Hai. Ini adalah rilis terbaru untukmu.</string>
 </resources>

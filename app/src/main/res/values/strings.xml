@@ -28,4 +28,10 @@
     <string name="search">Search</string>
     <string name="favorite_movie">Favorite Movies</string>
     <string name="tv_show_favorite">TV Show Favorite</string>
+    <string name="daily_reminder_active">Your Daily Reminder is On</string>
+    <string name="daily_reminder_not_active">Your Daily Reminder is Off</string>
+    <string name="daily_reminder_message">Hi. Check again for the latest movie and tv show updates</string>
+    <string name="release_reminder_active">New Release Reminder is On</string>
+    <string name="release_reminder_not_active">New Release Reminder is Not Active</string>
+    <string name="release_reminder_message">Hi. This new updates for you.</string>
 </resources>

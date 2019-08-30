@@ -27,4 +27,7 @@ object Constant {
     // Widgets
     const val EXTRA_ITEM = "com.bayuirfan.madesubmission.EXTRA_ITEM"
     const val LIST_ACTION = "com.bayuirfan.madesubmission.LIST_ACTION"
+
+    // Reminder
+    const val EXTRA_TYPE = "TYPE"
 }
