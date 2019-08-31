@@ -1,10 +1,13 @@
 package com.bayuirfan.madesubmission.services
 
-import android.content.*
+import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.widget.*
-import com.bayuirfan.madesubmission.*
+import android.widget.RemoteViews
+import android.widget.RemoteViewsService
+import com.bayuirfan.madesubmission.BuildConfig
+import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.model.data.TvShowModel
 import com.bayuirfan.madesubmission.model.local.database
 import com.bayuirfan.madesubmission.utils.Constant
@@ -20,7 +23,8 @@ import com.bayuirfan.madesubmission.utils.Constant.TV_SHOW_TABLE
 import com.bayuirfan.madesubmission.utils.Constant.VOTE_AVERAGE
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
-import org.jetbrains.anko.db.*
+import org.jetbrains.anko.db.classParser
+import org.jetbrains.anko.db.select
 
 class TvShowStackWidgetRemoteFactory(private val context: Context) : RemoteViewsService.RemoteViewsFactory {
     private val listData = mutableListOf<TvShowModel>()
@@ -57,7 +61,7 @@ class TvShowStackWidgetRemoteFactory(private val context: Context) : RemoteViews
                 .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                 .get()
         rv.setImageViewBitmap(R.id.catalogue_image_widget, bitmap)
-        rv.setTextViewText(R.id.banner_text, title)
+        rv.setTextViewText(R.id.banner_text_tv, title)
 
         val extras = Bundle()
         extras.putInt(ID, id)

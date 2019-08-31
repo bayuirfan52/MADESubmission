@@ -1,6 +1,7 @@
 package com.bayuirfan.madesubmission.utils
 
 object Constant {
+    // Detail
     const val IMG_W185 = "w185"
     const val EXTRA_DETAIL = "extra_detail"
 
@@ -30,4 +31,9 @@ object Constant {
 
     // Reminder
     const val EXTRA_TYPE = "TYPE"
+
+    // Preferences
+    const val PREFERENCES = "CataloguePreferences"
+    const val DAILY_REMINDER = "dailyReminder"
+    const val RELEASE_REMINDER = "releaseReminder"
 }

@@ -1,21 +1,31 @@
 package com.bayuirfan.madesubmission.services
 
-import android.app.*
-import android.content.*
+import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.media.RingtoneManager
 import android.os.Build
 import android.support.v4.app.NotificationCompat
+import android.util.Log
 import android.widget.Toast
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.features.MainActivity
 import com.bayuirfan.madesubmission.model.data.MovieModel
+import com.bayuirfan.madesubmission.model.remote.MovieCatalogueService
 import com.bayuirfan.madesubmission.utils.Constant.EXTRA_TYPE
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
+import rx.subscriptions.CompositeSubscription
+import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class SchedulerReceiver: BroadcastReceiver() {
-    val channelName = "Catalogue Reminder"
+    private val channelName = "Catalogue Reminder"
 
     override fun onReceive(context: Context?, intent: Intent?) {
         val id = intent?.getIntExtra(EXTRA_TYPE, 0)
@@ -24,7 +34,7 @@ class SchedulerReceiver: BroadcastReceiver() {
             if (id == ID_DAILY){
                 showDailyNotification(it, it.getString(R.string.daily_reminder_message))
             } else if (id == ID_RELEASE) {
-                showReleaseNotification(context, ArrayList())
+                loadReleaseUpdates(context)
             }
         }
     }
@@ -48,8 +58,8 @@ class SchedulerReceiver: BroadcastReceiver() {
             ID_RELEASE -> {
                 intent.putExtra(EXTRA_TYPE, ID_RELEASE)
 
-                calendar.set(Calendar.HOUR_OF_DAY, 8)
-                calendar.set(Calendar.MINUTE, 0)
+                calendar.set(Calendar.HOUR_OF_DAY, 19)
+                calendar.set(Calendar.MINUTE, 3)
 
                 pendingIntent = PendingIntent.getBroadcast(context, ID_RELEASE, intent, 0)
                 Toast.makeText(context, context.getString(R.string.release_reminder_active), Toast.LENGTH_SHORT).show()
@@ -112,32 +122,36 @@ class SchedulerReceiver: BroadcastReceiver() {
     private fun showReleaseNotification(context: Context, list: ArrayList<MovieModel>){
         val channelId = "Catalogue_Reminder_2"
 
-        val intent = Intent(context, MainActivity::class.java)
         val largeIcon = BitmapFactory.decodeResource(context.resources, R.drawable.ic_movies)
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
         val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val builder = NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.drawable.ic_movies)
                 .setContentTitle(context.getString(R.string.release_today_reminder))
-                .setContentText(context.getString(R.string.release_reminder_message))
                 .setLargeIcon(largeIcon)
                 .setGroup(GROUP_KEY_RELEASE)
                 .setSound(alarmSound)
                 .setAutoCancel(true)
 
-        if (list.size < 2){
-            builder.setSubText(list[0].title)
-        } else {
-            val inboxStyle = NotificationCompat.InboxStyle()
+        if (list.size != 0) {
+            if (list.size < 2) {
+                builder.setContentText(list[0].title)
+            } else {
+                val inboxStyle = NotificationCompat.InboxStyle()
+                        .setBigContentTitle(context.getString(R.string.release_reminder_message))
 
-            var count = 0
-            while (count < list.size){
-                inboxStyle.addLine(list[count].title)
-                count++
+                var count = 0
+                while (count < list.size) {
+                    inboxStyle.addLine(list[count].title)
+                    count++
+                }
+
+                builder.setContentText(context.getString(R.string.release_reminder_message))
+                builder.setStyle(inboxStyle)
+                        .setGroupSummary(true)
             }
-
-            builder.setStyle(inboxStyle)
-                    .setGroupSummary(true)
+        } else {
+            builder.setContentText(context.getString(R.string.no_updates))
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
@@ -150,6 +164,24 @@ class SchedulerReceiver: BroadcastReceiver() {
 
         val notification = builder.build()
         notificationManager?.notify(NOTIFICATION_ID, notification)
+    }
+
+    private fun loadReleaseUpdates(context: Context){
+        val compositeSubscription = CompositeSubscription()
+        val service = MovieCatalogueService.getClient()
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val date = Date()
+        val currentDate = dateFormat.format(date)
+        val subscription = service.getMovieReleaseToday(currentDate, currentDate)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({data ->
+                    showReleaseNotification(context, data.results as ArrayList<MovieModel>)
+                },{error ->
+                    Log.e("SCHEDULER", error.message)
+                })
+
+        compositeSubscription.add(subscription)
     }
 
     companion object {

@@ -34,4 +34,5 @@
     <string name="release_reminder_active">Pengingat Rilis Terbaru telah Aktif</string>
     <string name="release_reminder_not_active">Pengingat Rilis Terbaru Telah Non Aktif</string>
     <string name="release_reminder_message">Hai. Ini adalah rilis terbaru untukmu.</string>
+    <string name="no_updates">Tidak ada update untuk saat ini.</string>
 </resources>
