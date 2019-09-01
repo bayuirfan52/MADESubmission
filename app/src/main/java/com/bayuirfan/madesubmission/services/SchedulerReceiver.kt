@@ -1,12 +1,7 @@
 package com.bayuirfan.madesubmission.services
 
-import android.app.AlarmManager
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
+import android.app.*
+import android.content.*
 import android.graphics.BitmapFactory
 import android.media.RingtoneManager
 import android.os.Build
@@ -61,8 +56,8 @@ class SchedulerReceiver: BroadcastReceiver() {
             ID_RELEASE -> {
                 intent.putExtra(EXTRA_TYPE, ID_RELEASE)
 
-                calendar.set(Calendar.HOUR_OF_DAY, 17)
-                calendar.set(Calendar.MINUTE, 8)
+                calendar.set(Calendar.HOUR_OF_DAY, 18)
+                calendar.set(Calendar.MINUTE, 55)
                 calendar.set(Calendar.SECOND, 0)
 
                 pendingIntent = PendingIntent.getBroadcast(context, ID_RELEASE, intent, 0)
@@ -127,7 +122,8 @@ class SchedulerReceiver: BroadcastReceiver() {
         val channelId = "Catalogue_Reminder_2"
         val intent = Intent(context, DetailMovieActivity::class.java)
         intent.putExtra(EXTRA_DETAIL, data)
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        val pendingIntent = PendingIntent.getActivity(context, NOTIFICATION_REQ_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val largeIcon = BitmapFactory.decodeResource(context.resources, R.drawable.ic_movies)
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
@@ -216,7 +212,8 @@ class SchedulerReceiver: BroadcastReceiver() {
     }
 
     companion object {
-        private const val NOTIFICATION_ID = 0x01
+        private const val NOTIFICATION_ID = 0x1
+        private const val NOTIFICATION_REQ_CODE = 0x12
         private const val GROUP_KEY_RELEASE = "group_key_release"
 
         const val ID_DAILY = 101
