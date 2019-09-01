@@ -31,7 +31,10 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(intent)
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
         preferences = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
         val isDailyChecked = preferences.getBoolean(DAILY_REMINDER, false)
         val isReleaseChecked = preferences.getBoolean(RELEASE_REMINDER, false)

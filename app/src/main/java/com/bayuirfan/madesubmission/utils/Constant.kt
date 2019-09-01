@@ -8,6 +8,8 @@ object Constant {
     // Database
     const val DATABASE_VERSION = 1
     const val DATABASE_NAME = "movieCatalogue.db"
+    const val AUTHORITY = "com.bayuirfan.madesubmission"
+    const val SCHEME = "catalogue"
 
     // Tables
     const val MOVIE_TABLE = "MOVIE"

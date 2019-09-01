@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    
+    <permission android:name="com.bayuirfan.madesubmission.READ_DATABASE" android:protectionLevel="normal"/>
+    <permission android:name="com.bayuirfan.madesubmission.WRITE_DATABASE" android:protectionLevel="normal"/>
 
     <application
         android:allowBackup="true"
@@ -59,6 +62,13 @@
         <service
             android:name=".services.TvShowStackWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
+        
+        <provider
+            android:authorities="com.bayuirfan.madesubmission"
+            android:name=".model.local.CatalogueContentProvider"
+            android:exported="true"
+            android:readPermission="com.bayuirfan.madesubmission.READ_DATABASE"
+            android:writePermission="com.bayuirfan.madesubmission.WRITE_DATABASE"/>
     </application>
 
 </manifest>

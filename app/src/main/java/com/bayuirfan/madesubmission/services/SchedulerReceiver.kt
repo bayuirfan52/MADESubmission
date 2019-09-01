@@ -15,8 +15,10 @@ import android.util.Log
 import android.widget.Toast
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.features.MainActivity
+import com.bayuirfan.madesubmission.features.details.movie.DetailMovieActivity
 import com.bayuirfan.madesubmission.model.data.MovieModel
 import com.bayuirfan.madesubmission.model.remote.MovieCatalogueService
+import com.bayuirfan.madesubmission.utils.Constant.EXTRA_DETAIL
 import com.bayuirfan.madesubmission.utils.Constant.EXTRA_TYPE
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -51,6 +53,7 @@ class SchedulerReceiver: BroadcastReceiver() {
 
                 calendar.set(Calendar.HOUR_OF_DAY, 7)
                 calendar.set(Calendar.MINUTE, 0)
+                calendar.set(Calendar.SECOND, 0)
 
                 pendingIntent = PendingIntent.getBroadcast(context, ID_DAILY, intent, 0)
                 Toast.makeText(context, context.getString(R.string.daily_reminder_active), Toast.LENGTH_SHORT).show()
@@ -58,8 +61,9 @@ class SchedulerReceiver: BroadcastReceiver() {
             ID_RELEASE -> {
                 intent.putExtra(EXTRA_TYPE, ID_RELEASE)
 
-                calendar.set(Calendar.HOUR_OF_DAY, 19)
-                calendar.set(Calendar.MINUTE, 3)
+                calendar.set(Calendar.HOUR_OF_DAY, 17)
+                calendar.set(Calendar.MINUTE, 8)
+                calendar.set(Calendar.SECOND, 0)
 
                 pendingIntent = PendingIntent.getBroadcast(context, ID_RELEASE, intent, 0)
                 Toast.makeText(context, context.getString(R.string.release_reminder_active), Toast.LENGTH_SHORT).show()
@@ -119,8 +123,11 @@ class SchedulerReceiver: BroadcastReceiver() {
         notificationManager?.notify(NOTIFICATION_ID, notification)
     }
 
-    private fun showReleaseNotification(context: Context, list: ArrayList<MovieModel>){
+    private fun showReleaseNotification(context: Context, data: MovieModel){
         val channelId = "Catalogue_Reminder_2"
+        val intent = Intent(context, DetailMovieActivity::class.java)
+        intent.putExtra(EXTRA_DETAIL, data)
+        val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
         val largeIcon = BitmapFactory.decodeResource(context.resources, R.drawable.ic_movies)
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
@@ -128,31 +135,49 @@ class SchedulerReceiver: BroadcastReceiver() {
         val builder = NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.drawable.ic_movies)
                 .setContentTitle(context.getString(R.string.release_today_reminder))
+                .setContentText(data.title)
                 .setLargeIcon(largeIcon)
+                .setContentIntent(pendingIntent)
                 .setGroup(GROUP_KEY_RELEASE)
                 .setSound(alarmSound)
                 .setAutoCancel(true)
 
-        if (list.size != 0) {
-            if (list.size < 2) {
-                builder.setContentText(list[0].title)
-            } else {
-                val inboxStyle = NotificationCompat.InboxStyle()
-                        .setBigContentTitle(context.getString(R.string.release_reminder_message))
 
-                var count = 0
-                while (count < list.size) {
-                    inboxStyle.addLine(list[count].title)
-                    count++
-                }
 
-                builder.setContentText(context.getString(R.string.release_reminder_message))
-                builder.setStyle(inboxStyle)
-                        .setGroupSummary(true)
-            }
-        } else {
-            builder.setContentText(context.getString(R.string.no_updates))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val channel = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT)
+
+            builder.setChannelId(channelId)
+
+            notificationManager?.createNotificationChannel(channel)
         }
+
+        val notification = builder.build()
+        notificationManager?.notify(NOTIFICATION_ID, notification)
+    }
+
+    private fun showReleaseGroupNotification(context: Context, list: ArrayList<MovieModel>){
+        val channelId = "Catalogue_Reminder_2"
+        val largeIcon = BitmapFactory.decodeResource(context.resources, R.drawable.ic_movies)
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
+        val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+
+        val inboxStyle = NotificationCompat.InboxStyle()
+                .setBigContentTitle(context.getString(R.string.release_reminder_message))
+        for (i in list.indices){
+            inboxStyle.addLine(list[i].title)
+        }
+
+        val builder = NotificationCompat.Builder(context, channelId)
+                .setSmallIcon(R.drawable.ic_movies)
+                .setContentTitle(context.getString(R.string.release_today_reminder))
+                .setContentText(context.getString(R.string.release_reminder_message))
+                .setLargeIcon(largeIcon)
+                .setGroup(GROUP_KEY_RELEASE)
+                .setGroupSummary(true)
+                .setStyle(inboxStyle)
+                .setSound(alarmSound)
+                .setAutoCancel(true)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             val channel = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT)
@@ -176,7 +201,13 @@ class SchedulerReceiver: BroadcastReceiver() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({data ->
-                    showReleaseNotification(context, data.results as ArrayList<MovieModel>)
+                    if (data.status_code == null){
+                        if (data.results.size < 2)
+                            showReleaseNotification(context, data.results[0])
+                        else {
+                            showReleaseGroupNotification(context, data.results as ArrayList<MovieModel>)
+                        }
+                    }
                 },{error ->
                     Log.e("SCHEDULER", error.message)
                 })
