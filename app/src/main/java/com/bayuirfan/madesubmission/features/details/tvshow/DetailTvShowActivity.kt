@@ -1,41 +1,29 @@
 package com.bayuirfan.madesubmission.features.details.tvshow
 
-import android.database.sqlite.SQLiteConstraintException
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import com.bayuirfan.madesubmission.BuildConfig
-import com.bayuirfan.madesubmission.R
-import com.bayuirfan.madesubmission.model.data.MovieModel
+import android.view.*
+import com.bayuirfan.madesubmission.*
 import com.bayuirfan.madesubmission.model.data.TvShowModel
-import com.bayuirfan.madesubmission.model.local.database
-import com.bayuirfan.madesubmission.utils.Constant.BACKDROP_PATH
+import com.bayuirfan.madesubmission.model.local.CatalogueDatabase
 import com.bayuirfan.madesubmission.utils.Constant.EXTRA_DETAIL
-import com.bayuirfan.madesubmission.utils.Constant.FIRST_AIR_DATE
-import com.bayuirfan.madesubmission.utils.Constant.ID
-import com.bayuirfan.madesubmission.utils.Constant.ID_DATA
 import com.bayuirfan.madesubmission.utils.Constant.IMG_W185
-import com.bayuirfan.madesubmission.utils.Constant.NAME
-import com.bayuirfan.madesubmission.utils.Constant.OVERVIEW
-import com.bayuirfan.madesubmission.utils.Constant.POSTER_PATH
-import com.bayuirfan.madesubmission.utils.Constant.TV_SHOW_TABLE
-import com.bayuirfan.madesubmission.utils.Constant.VOTE_AVERAGE
 import com.bayuirfan.madesubmission.utils.FormatDate
 import com.bumptech.glide.Glide
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_detail_tv_show.*
-import org.jetbrains.anko.db.classParser
-import org.jetbrains.anko.db.delete
-import org.jetbrains.anko.db.insert
-import org.jetbrains.anko.db.select
 
 class DetailTvShowActivity : AppCompatActivity(){
     private var menu: Menu? = null
     private var isFavorite: Boolean = false
     private var data: TvShowModel? = null
+    private var database: CatalogueDatabase? = null
+    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +32,7 @@ class DetailTvShowActivity : AppCompatActivity(){
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             supportActionBar?.setTitle(R.string.detail_tv_show)
         }
+        database = CatalogueDatabase.getInstance(this)
         data = intent.getParcelableExtra(EXTRA_DETAIL)
         loadFromTvShow()
     }
@@ -80,14 +69,15 @@ class DetailTvShowActivity : AppCompatActivity(){
     }
 
     private fun checkIsFavorite(model: TvShowModel){
-        database.use {
-            val result = select(TV_SHOW_TABLE)
-                    .whereArgs(
-                            "($ID = {id})",
-                            "id" to model.ids
-                    )
-            val favorite = result.parseList(classParser<MovieModel>())
-            if(favorite.isNotEmpty()) isFavorite = true
+        database?.let {
+            compositeDisposable.add(
+                    it.tvShowDao().loadFavoritesById(model.ids)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribeOn(Schedulers.computation())
+                            .subscribe{ data ->
+                                isFavorite = data != null
+                            }
+            )
         }
     }
 
@@ -132,31 +122,30 @@ class DetailTvShowActivity : AppCompatActivity(){
         showLoading(false)
     }
 
-    private fun addToFavorite() = try {
-        database.use {
-            insert(TV_SHOW_TABLE,
-                    ID_DATA to data?.idData,
-                    NAME to data?.name,
-                    POSTER_PATH to data?.posterPath,
-                    BACKDROP_PATH to data?.backdropPath,
-                    OVERVIEW to data?.overview,
-                    VOTE_AVERAGE to data?.voteAverage,
-                    FIRST_AIR_DATE to data?.firstAirDate)
-        }
+    private fun addToFavorite() {
+        compositeDisposable.add(Observable.fromCallable {
+                data?.let {
+                    database?.tvShowDao()?.insertIntoFavorites(it)
+                }
+            }.observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.computation())
+                .subscribe()
+        )
+
         showSnackbarMessage(getString(R.string.added_message))
-    } catch (e: SQLiteConstraintException){
-        showSnackbarMessage(e.localizedMessage)
     }
 
-    private fun removeFromFavorite() = try {
-        database.use {
+    private fun removeFromFavorite() {
+        compositeDisposable.add(Observable.fromCallable {
             data?.let {
-                delete(TV_SHOW_TABLE, "($ID  = {id})", "id" to it.ids)
+                database?.tvShowDao()?.removeFromFavorites(it)
             }
-        }
+        }.observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.computation())
+                .subscribe()
+        )
+
         showSnackbarMessage(getString(R.string.removed_message))
-    } catch (e : SQLiteConstraintException){
-        showSnackbarMessage(e.localizedMessage)
     }
 
     private fun showSnackbarMessage(message: String){

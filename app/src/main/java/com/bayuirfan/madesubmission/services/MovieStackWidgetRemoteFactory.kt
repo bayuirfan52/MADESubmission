@@ -2,17 +2,15 @@ package com.bayuirfan.madesubmission.services
 
 import android.content.*
 import android.graphics.Bitmap
-import android.os.*
+import android.os.Bundle
 import android.widget.*
 import com.bayuirfan.madesubmission.*
 import com.bayuirfan.madesubmission.model.data.MovieModel
-import com.bayuirfan.madesubmission.model.local.database
 import com.bayuirfan.madesubmission.utils.Constant
 import com.bayuirfan.madesubmission.utils.Constant.BACKDROP_PATH
 import com.bayuirfan.madesubmission.utils.Constant.EXTRA_ITEM
 import com.bayuirfan.madesubmission.utils.Constant.ID
 import com.bayuirfan.madesubmission.utils.Constant.ID_DATA
-import com.bayuirfan.madesubmission.utils.Constant.MOVIE_TABLE
 import com.bayuirfan.madesubmission.utils.Constant.OVERVIEW
 import com.bayuirfan.madesubmission.utils.Constant.POSTER_PATH
 import com.bayuirfan.madesubmission.utils.Constant.RELEASE_DATE
@@ -20,7 +18,6 @@ import com.bayuirfan.madesubmission.utils.Constant.TITLE
 import com.bayuirfan.madesubmission.utils.Constant.VOTE_AVERAGE
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
-import org.jetbrains.anko.db.*
 
 class MovieStackWidgetRemoteFactory(private val context: Context) : RemoteViewsService.RemoteViewsFactory{
     private val listData: MutableList<MovieModel> = mutableListOf()
@@ -32,14 +29,7 @@ class MovieStackWidgetRemoteFactory(private val context: Context) : RemoteViewsS
     override fun getItemId(position: Int): Long = 0
 
     override fun onDataSetChanged() {
-        val identityToken = Binder.clearCallingIdentity()
-        context.database.use {
-            val data = select(MOVIE_TABLE)
-                    .parseList(classParser<MovieModel>())
-            listData.addAll(data)
-        }
 
-        Binder.restoreCallingIdentity(identityToken)
     }
 
     override fun hasStableIds(): Boolean = false

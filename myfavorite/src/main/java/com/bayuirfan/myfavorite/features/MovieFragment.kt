@@ -1,6 +1,7 @@
 package com.bayuirfan.myfavorite.features
 
 
+import android.database.Cursor
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -8,12 +9,13 @@ import android.view.*
 import com.bayuirfan.myfavorite.R
 import com.bayuirfan.myfavorite.adapter.MovieRecyclerAdapter
 import com.bayuirfan.myfavorite.model.MovieModel
+import com.bayuirfan.myfavorite.utils.LoadDataCallback
 import kotlinx.android.synthetic.main.fragment_movie.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class MovieFragment : Fragment() {
+class MovieFragment : Fragment(), LoadDataCallback {
     private lateinit var adapter: MovieRecyclerAdapter
     private val list = mutableListOf<MovieModel>()
 
@@ -33,5 +35,10 @@ class MovieFragment : Fragment() {
 
         rv_movie.adapter = adapter
         rv_movie.setHasFixedSize(true)
+    }
+
+
+    override fun postExecute(cursor: Cursor) {
+
     }
 }

@@ -1,15 +1,11 @@
 package com.bayuirfan.madesubmission.services
 
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.widget.RemoteViews
-import android.widget.RemoteViewsService
-import com.bayuirfan.madesubmission.BuildConfig
-import com.bayuirfan.madesubmission.R
+import android.widget.*
+import com.bayuirfan.madesubmission.*
 import com.bayuirfan.madesubmission.model.data.TvShowModel
-import com.bayuirfan.madesubmission.model.local.database
 import com.bayuirfan.madesubmission.utils.Constant
 import com.bayuirfan.madesubmission.utils.Constant.BACKDROP_PATH
 import com.bayuirfan.madesubmission.utils.Constant.EXTRA_ITEM
@@ -19,12 +15,9 @@ import com.bayuirfan.madesubmission.utils.Constant.ID_DATA
 import com.bayuirfan.madesubmission.utils.Constant.NAME
 import com.bayuirfan.madesubmission.utils.Constant.OVERVIEW
 import com.bayuirfan.madesubmission.utils.Constant.POSTER_PATH
-import com.bayuirfan.madesubmission.utils.Constant.TV_SHOW_TABLE
 import com.bayuirfan.madesubmission.utils.Constant.VOTE_AVERAGE
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
-import org.jetbrains.anko.db.classParser
-import org.jetbrains.anko.db.select
 
 class TvShowStackWidgetRemoteFactory(private val context: Context) : RemoteViewsService.RemoteViewsFactory {
     private val listData = mutableListOf<TvShowModel>()
@@ -35,11 +28,7 @@ class TvShowStackWidgetRemoteFactory(private val context: Context) : RemoteViews
     override fun getItemId(position: Int): Long = 0
 
     override fun onDataSetChanged() {
-        context.database.use {
-            val tvShow = select(TV_SHOW_TABLE)
-                    .parseList(classParser<TvShowModel>())
-            listData.addAll(tvShow)
-        }
+
     }
 
     override fun hasStableIds(): Boolean = false
