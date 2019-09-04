@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.*
 import com.bayuirfan.madesubmission.*
 import com.bayuirfan.madesubmission.model.data.MovieModel
+import com.bayuirfan.madesubmission.model.local.CatalogueDatabase
 import com.bayuirfan.madesubmission.utils.Constant
 import com.bayuirfan.madesubmission.utils.Constant.BACKDROP_PATH
 import com.bayuirfan.madesubmission.utils.Constant.EXTRA_ITEM
@@ -18,18 +19,34 @@ import com.bayuirfan.madesubmission.utils.Constant.TITLE
 import com.bayuirfan.madesubmission.utils.Constant.VOTE_AVERAGE
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 class MovieStackWidgetRemoteFactory(private val context: Context) : RemoteViewsService.RemoteViewsFactory{
-    private val listData: MutableList<MovieModel> = mutableListOf()
+    private val listData= mutableListOf<MovieModel>()
+    private val compositeDisposable = CompositeDisposable()
+    private var database : CatalogueDatabase? = null
 
-    override fun onCreate() {}
+    override fun onCreate() {
+        database = CatalogueDatabase.getInstance(context)
+    }
 
     override fun getLoadingView(): RemoteViews? = null
 
     override fun getItemId(position: Int): Long = 0
 
     override fun onDataSetChanged() {
-
+        database?.let {
+            compositeDisposable.add(
+                    it.movieDao().loadAllFavorites()
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribeOn(Schedulers.computation())
+                            .subscribe { data ->
+                                listData.addAll(data)
+                            }
+            )
+        }
     }
 
     override fun hasStableIds(): Boolean = false

@@ -71,7 +71,7 @@ class DetailTvShowActivity : AppCompatActivity(){
     private fun checkIsFavorite(model: TvShowModel){
         database?.let {
             compositeDisposable.add(
-                    it.tvShowDao().loadFavoritesById(model.ids)
+                    it.tvShowDao().loadFavoritesById(model.idData)
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribeOn(Schedulers.computation())
                             .subscribe{ data ->

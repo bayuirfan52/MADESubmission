@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.bayuirfan.myfavorite.R
 import com.bayuirfan.myfavorite.adapter.MainPagerAdapter
+import com.bayuirfan.myfavorite.features.movie.MovieFragment
+import com.bayuirfan.myfavorite.features.tvshow.TvShowFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

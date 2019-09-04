@@ -1,5 +1,9 @@
 package com.bayuirfan.myfavorite.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class MovieModel (
         val id: Int,
         val id_data: Int,
@@ -9,4 +13,4 @@ data class MovieModel (
         val overview: String,
         val vote_average: String,
         val release_date: String
-)
+): Parcelable

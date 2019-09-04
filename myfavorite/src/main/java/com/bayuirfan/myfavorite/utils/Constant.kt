@@ -1,12 +1,26 @@
 package com.bayuirfan.myfavorite.utils
 
+import android.net.Uri
+
 object Constant {
     const val IMG_W185 = "w185"
-    const val AUTHORITY = "com.bayuirfan.madesubmission"
+    private const val AUTHORITY = "com.bayuirfan.madesubmission"
 
     // Tables
-    const val MOVIE_TABLE = "MOVIE"
-    const val TV_SHOW_TABLE = "TV_SHOW"
+    private const val MOVIE_TABLE = "MOVIE"
+    private const val TV_SHOW_TABLE = "TV_SHOW"
+    private const val SCHEME = "content"
+    val MOVIE_CONTENT_URI: Uri
+        get() = Uri.Builder().scheme(SCHEME)
+                .authority(AUTHORITY)
+                .appendPath(MOVIE_TABLE)
+                .build()
+
+    val TV_SHOW_CONTENT_URI: Uri
+        get() = Uri.Builder().scheme(SCHEME)
+                .authority(AUTHORITY)
+                .appendPath(TV_SHOW_TABLE)
+                .build()
 
     // Columns
     const val TITLE = "TITLE"

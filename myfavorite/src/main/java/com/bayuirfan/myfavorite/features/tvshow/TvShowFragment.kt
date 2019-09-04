@@ -1,6 +1,7 @@
-package com.bayuirfan.myfavorite.features
+package com.bayuirfan.myfavorite.features.tvshow
 
 
+import android.arch.lifecycle.*
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -33,5 +34,38 @@ class TvShowFragment : Fragment() {
 
         rv_tv_show.adapter = adapter
         rv_tv_show.setHasFixedSize(true)
+        loadAllData()
+    }
+
+    private fun loadAllData(){
+        val viewModel = ViewModelProviders.of(this).get(TvShowViewModel::class.java)
+        viewModel.getAllData(this.context).observe(this, observer)
+    }
+
+    private val observer : Observer<ArrayList<TvShowModel>> = Observer {data ->
+        if (data != null){
+            if (data.size == 0){
+                showError()
+            } else {
+                hideError()
+                tvShowList.clear()
+                tvShowList.addAll(data)
+                adapter.notifyDataSetChanged()
+            }
+        } else {
+            showError()
+        }
+    }
+
+    private fun showError(){
+        iv_not_found_favorite.visibility = View.VISIBLE
+        tv_not_found_favorite.visibility = View.VISIBLE
+        rv_tv_show.visibility = View.GONE
+    }
+
+    private fun hideError(){
+        iv_not_found_favorite.visibility = View.GONE
+        tv_not_found_favorite.visibility = View.GONE
+        rv_tv_show.visibility = View.VISIBLE
     }
 }

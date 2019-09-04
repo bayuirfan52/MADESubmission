@@ -10,10 +10,8 @@ import android.util.Log
 import android.widget.Toast
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.features.MainActivity
-import com.bayuirfan.madesubmission.features.details.movie.DetailMovieActivity
 import com.bayuirfan.madesubmission.model.data.MovieModel
 import com.bayuirfan.madesubmission.model.remote.MovieCatalogueService
-import com.bayuirfan.madesubmission.utils.Constant.EXTRA_DETAIL
 import com.bayuirfan.madesubmission.utils.Constant.EXTRA_TYPE
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -56,8 +54,8 @@ class SchedulerReceiver: BroadcastReceiver() {
             ID_RELEASE -> {
                 intent.putExtra(EXTRA_TYPE, ID_RELEASE)
 
-                calendar.set(Calendar.HOUR_OF_DAY, 18)
-                calendar.set(Calendar.MINUTE, 55)
+                calendar.set(Calendar.HOUR_OF_DAY, 8)
+                calendar.set(Calendar.MINUTE, 0)
                 calendar.set(Calendar.SECOND, 0)
 
                 pendingIntent = PendingIntent.getBroadcast(context, ID_RELEASE, intent, 0)
@@ -118,42 +116,12 @@ class SchedulerReceiver: BroadcastReceiver() {
         notificationManager?.notify(NOTIFICATION_ID, notification)
     }
 
-    private fun showReleaseNotification(context: Context, data: MovieModel){
+    private fun showReleaseNotification(context: Context, list: ArrayList<MovieModel>){
         val channelId = "Catalogue_Reminder_2"
-        val intent = Intent(context, DetailMovieActivity::class.java)
-        intent.putExtra(EXTRA_DETAIL, data)
+        val intent = Intent(context, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         val pendingIntent = PendingIntent.getActivity(context, NOTIFICATION_REQ_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-        val largeIcon = BitmapFactory.decodeResource(context.resources, R.drawable.ic_movies)
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
-        val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        val builder = NotificationCompat.Builder(context, channelId)
-                .setSmallIcon(R.drawable.ic_movies)
-                .setContentTitle(context.getString(R.string.release_today_reminder))
-                .setContentText(data.title)
-                .setLargeIcon(largeIcon)
-                .setContentIntent(pendingIntent)
-                .setGroup(GROUP_KEY_RELEASE)
-                .setSound(alarmSound)
-                .setAutoCancel(true)
-
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            val channel = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT)
-
-            builder.setChannelId(channelId)
-
-            notificationManager?.createNotificationChannel(channel)
-        }
-
-        val notification = builder.build()
-        notificationManager?.notify(NOTIFICATION_ID, notification)
-    }
-
-    private fun showReleaseGroupNotification(context: Context, list: ArrayList<MovieModel>){
-        val channelId = "Catalogue_Reminder_2"
         val largeIcon = BitmapFactory.decodeResource(context.resources, R.drawable.ic_movies)
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
         val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
@@ -169,11 +137,12 @@ class SchedulerReceiver: BroadcastReceiver() {
                 .setContentTitle(context.getString(R.string.release_today_reminder))
                 .setContentText(context.getString(R.string.release_reminder_message))
                 .setLargeIcon(largeIcon)
-                .setGroup(GROUP_KEY_RELEASE)
-                .setGroupSummary(true)
+                .setContentIntent(pendingIntent)
                 .setStyle(inboxStyle)
                 .setSound(alarmSound)
                 .setAutoCancel(true)
+
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             val channel = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT)
@@ -198,11 +167,7 @@ class SchedulerReceiver: BroadcastReceiver() {
                 .subscribeOn(Schedulers.io())
                 .subscribe({data ->
                     if (data.status_code == null){
-                        if (data.results.size < 2)
-                            showReleaseNotification(context, data.results[0])
-                        else {
-                            showReleaseGroupNotification(context, data.results as ArrayList<MovieModel>)
-                        }
+                        showReleaseNotification(context, data.results as ArrayList<MovieModel>)
                     }
                 },{error ->
                     Log.e("SCHEDULER", error.message)
@@ -214,7 +179,6 @@ class SchedulerReceiver: BroadcastReceiver() {
     companion object {
         private const val NOTIFICATION_ID = 0x1
         private const val NOTIFICATION_REQ_CODE = 0x12
-        private const val GROUP_KEY_RELEASE = "group_key_release"
 
         const val ID_DAILY = 101
         const val ID_RELEASE = 102

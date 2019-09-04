@@ -76,7 +76,7 @@ class DetailMovieActivity : AppCompatActivity(){
     private fun checkIsFavorite(model: MovieModel){
         database?.let {
            compositeDisposable.add(
-                   it.movieDao().loadFavoritesById(model.ids)
+                   it.movieDao().loadFavoritesById(model.idData)
                            .observeOn(AndroidSchedulers.mainThread())
                            .subscribeOn(Schedulers.computation())
                            .subscribe { result ->
