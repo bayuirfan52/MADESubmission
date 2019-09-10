@@ -51,10 +51,9 @@ class DetailMovieActivity : AppCompatActivity(){
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
+        when(item.itemId) {
             android.R.id.home -> {
                 onBackPressed()
-                true
             }
 
             R.id.check_favorite -> {
@@ -66,11 +65,10 @@ class DetailMovieActivity : AppCompatActivity(){
                 }
                 isFavorite = !isFavorite
                 setFavoriteState()
-                true
             }
-
-            else -> super.onOptionsItemSelected(item)
         }
+
+        return super.onOptionsItemSelected(item)
     }
 
     private fun checkIsFavorite(model: MovieModel){
@@ -151,7 +149,7 @@ class DetailMovieActivity : AppCompatActivity(){
                 .subscribe()
         )
 
-        showSnackbarMessage(getString(R.string.added_message))
+        showSnackbarMessage(getString(R.string.removed_message))
     }
 
     private fun showSnackbarMessage(message: String){

@@ -14,6 +14,9 @@ interface TvShowDao {
     fun loadAllFavorites(): Flowable<List<TvShowModel>>
 
     @Query("SELECT * FROM $TV_SHOW_TABLE")
+    fun loadAllFavoritesForWidget(): List<TvShowModel>
+
+    @Query("SELECT * FROM $TV_SHOW_TABLE")
     fun loadAllFavoritesCursor(): Cursor
 
     @Query("SELECT * FROM $TV_SHOW_TABLE WHERE $ID_DATA = :id")

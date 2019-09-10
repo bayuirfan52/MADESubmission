@@ -14,6 +14,9 @@ interface MovieDao {
     fun loadAllFavorites(): Flowable<List<MovieModel>>
 
     @Query("SELECT * FROM $MOVIE_TABLE")
+    fun loadAllFavoritesForWidget(): List<MovieModel>
+
+    @Query("SELECT * FROM $MOVIE_TABLE")
     fun loadAllFavoritesCursor(): Cursor
 
     @Query("SELECT * FROM $MOVIE_TABLE WHERE $ID_DATA = :id")

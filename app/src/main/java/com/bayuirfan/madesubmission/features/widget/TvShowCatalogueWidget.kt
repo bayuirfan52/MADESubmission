@@ -28,6 +28,7 @@ class TvShowCatalogueWidget : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         // There may be multiple widgets active, so update all of them
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.stack_view)
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId)
         }
@@ -71,6 +72,7 @@ class TvShowCatalogueWidget : AppWidgetProvider() {
                                      appWidgetId: Int) {
             val intent = Intent(context, TvShowStackWidgetService::class.java)
             intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
+            intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
 
             val views = RemoteViews(context.packageName, R.layout.tv_show_catalogue_widget)
             views.setRemoteAdapter(R.id.stack_view, intent)
