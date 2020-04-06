@@ -1,11 +1,12 @@
 package com.bayuirfan.madesubmission.features.dashboard.search
 
-import android.arch.lifecycle.*
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.*
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.*
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.adapter.TvShowRecyclerAdapter
 import com.bayuirfan.madesubmission.features.dashboard.tvshow.TvShowViewModel
@@ -67,8 +68,8 @@ class SearchTvShowActivity : AppCompatActivity(), OnItemClickCallback<TvShowMode
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId){
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
             android.R.id.home -> {
                 onBackPressed()
             }
@@ -85,7 +86,7 @@ class SearchTvShowActivity : AppCompatActivity(), OnItemClickCallback<TvShowMode
     }
 
     private fun searchData(name: String){
-        val tvShowModel = ViewModelProviders.of(this).get(TvShowViewModel::class.java)
+        val tvShowModel = ViewModelProvider(this).get(TvShowViewModel::class.java)
         tvShowModel.searchTvShowByName(name).observe(this, observer)
         showLoading(true)
     }

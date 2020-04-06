@@ -5,9 +5,9 @@ import android.content.*
 import android.graphics.BitmapFactory
 import android.media.RingtoneManager
 import android.os.Build
-import android.support.v4.app.NotificationCompat
 import android.util.Log
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.features.MainActivity
 import com.bayuirfan.madesubmission.model.data.MovieModel
@@ -170,7 +170,7 @@ class SchedulerReceiver: BroadcastReceiver() {
                         showReleaseNotification(context, data.results as ArrayList<MovieModel>)
                     }
                 },{error ->
-                    Log.e("SCHEDULER", error.message)
+                    error.message?.let { Log.e("SCHEDULER", it)}
                 })
 
         compositeSubscription.add(subscription)

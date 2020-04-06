@@ -1,7 +1,7 @@
 package com.bayuirfan.myfavorite.features.movie
 
-import android.arch.lifecycle.*
 import android.content.Context
+import androidx.lifecycle.*
 import com.bayuirfan.myfavorite.model.MovieModel
 import com.bayuirfan.myfavorite.utils.Constant.MOVIE_CONTENT_URI
 import com.bayuirfan.myfavorite.utils.CursorMapper

@@ -2,9 +2,9 @@ package com.bayuirfan.madesubmission.features
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.features.dashboard.movie.MovieFragment
 import com.bayuirfan.madesubmission.features.dashboard.tvshow.TvShowFragment

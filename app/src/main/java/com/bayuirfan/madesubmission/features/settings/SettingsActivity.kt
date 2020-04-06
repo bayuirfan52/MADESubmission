@@ -1,12 +1,10 @@
 package com.bayuirfan.madesubmission.features.settings
 
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
+import android.content.*
 import android.os.Bundle
 import android.provider.Settings
-import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.services.SchedulerReceiver
 import com.bayuirfan.madesubmission.services.SchedulerReceiver.Companion.ID_DAILY
@@ -66,8 +64,8 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId == android.R.id.home){
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home){
             onBackPressed()
         }
         return super.onOptionsItemSelected(item)

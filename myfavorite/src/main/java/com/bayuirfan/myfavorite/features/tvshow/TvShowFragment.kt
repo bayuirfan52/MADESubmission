@@ -1,11 +1,11 @@
 package com.bayuirfan.myfavorite.features.tvshow
 
 
-import android.arch.lifecycle.*
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.*
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.*
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bayuirfan.myfavorite.R
 import com.bayuirfan.myfavorite.adapter.TvShowRecyclerAdapter
 import com.bayuirfan.myfavorite.model.TvShowModel
@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_tv_show.*
 /**
  * A simple [Fragment] subclass.
  */
-class TvShowFragment : Fragment() {
+class TvShowFragment : androidx.fragment.app.Fragment() {
     private lateinit var adapter: TvShowRecyclerAdapter
     private val tvShowList = mutableListOf<TvShowModel>()
 
@@ -38,8 +38,8 @@ class TvShowFragment : Fragment() {
     }
 
     private fun loadAllData(){
-        val viewModel = ViewModelProviders.of(this).get(TvShowViewModel::class.java)
-        viewModel.getAllData(this.context).observe(this, observer)
+        val viewModel = ViewModelProvider(this).get(TvShowViewModel::class.java)
+        viewModel.getAllData(this.context).observe(viewLifecycleOwner, observer)
     }
 
     private val observer : Observer<ArrayList<TvShowModel>> = Observer {data ->

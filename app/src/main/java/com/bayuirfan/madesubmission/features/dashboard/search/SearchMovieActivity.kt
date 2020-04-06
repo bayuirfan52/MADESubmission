@@ -1,11 +1,11 @@
 package com.bayuirfan.madesubmission.features.dashboard.search
 
-import android.arch.lifecycle.*
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.*
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.*
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.adapter.MovieRecyclerAdapter
 import com.bayuirfan.madesubmission.features.dashboard.movie.MovieViewModel
@@ -27,7 +27,7 @@ class SearchMovieActivity : AppCompatActivity(), OnItemClickCallback<MovieModel>
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         movieModel = mutableListOf()
 
-        rv_search.layoutManager = LinearLayoutManager(this)
+        rv_search.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         adapter = MovieRecyclerAdapter(this, movieModel as ArrayList<MovieModel>, this)
         rv_search.adapter = adapter
         rv_search.setHasFixedSize(true)
@@ -67,8 +67,8 @@ class SearchMovieActivity : AppCompatActivity(), OnItemClickCallback<MovieModel>
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId){
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
             android.R.id.home -> {
                 onBackPressed()
             }
@@ -95,7 +95,7 @@ class SearchMovieActivity : AppCompatActivity(), OnItemClickCallback<MovieModel>
     }
 
     private fun searchData(name: String){
-        val movieViewModel = ViewModelProviders.of(this).get(MovieViewModel::class.java)
+        val movieViewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
         movieViewModel.searchMovieByName(name).observe(this,observer)
         showLoading(true)
     }

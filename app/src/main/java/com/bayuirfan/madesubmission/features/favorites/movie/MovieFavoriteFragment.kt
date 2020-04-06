@@ -1,15 +1,12 @@
 package com.bayuirfan.madesubmission.features.favorites.movie
 
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.*
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.adapter.MovieRecyclerAdapter
 import com.bayuirfan.madesubmission.features.dashboard.movie.MovieViewModel
@@ -44,7 +41,7 @@ class MovieFavoriteFragment : Fragment(), OnItemClickCallback<MovieModel> {
 
     private fun getFavoriteData(){
         showLoading(true)
-        val movieViewModel = ViewModelProviders.of(this).get(MovieViewModel::class.java)
+        val movieViewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
         movieViewModel.getMovieLocalList(this.context).observe(this,getMovieList)
     }
 

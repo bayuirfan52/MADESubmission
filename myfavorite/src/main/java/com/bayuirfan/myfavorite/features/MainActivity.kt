@@ -1,7 +1,7 @@
 package com.bayuirfan.myfavorite.features
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.bayuirfan.myfavorite.R
 import com.bayuirfan.myfavorite.adapter.MainPagerAdapter
 import com.bayuirfan.myfavorite.features.movie.MovieFragment

@@ -1,7 +1,7 @@
 package com.bayuirfan.madesubmission.model.local
 
-import android.arch.persistence.room.*
 import android.content.Context
+import androidx.room.*
 import com.bayuirfan.madesubmission.model.data.*
 import com.bayuirfan.madesubmission.model.local.dao.*
 import com.bayuirfan.madesubmission.utils.Constant.DATABASE_NAME

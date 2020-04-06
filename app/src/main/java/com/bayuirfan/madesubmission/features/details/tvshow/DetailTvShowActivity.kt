@@ -1,10 +1,10 @@
 package com.bayuirfan.madesubmission.features.details.tvshow
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.bayuirfan.madesubmission.*
 import com.bayuirfan.madesubmission.model.data.TvShowModel
 import com.bayuirfan.madesubmission.model.local.CatalogueDatabase
@@ -12,6 +12,7 @@ import com.bayuirfan.madesubmission.utils.Constant.EXTRA_DETAIL
 import com.bayuirfan.madesubmission.utils.Constant.IMG_W185
 import com.bayuirfan.madesubmission.utils.FormatDate
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -49,8 +50,8 @@ class DetailTvShowActivity : AppCompatActivity(){
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId){
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
             android.R.id.home -> {
                 onBackPressed()
             }
@@ -69,14 +70,17 @@ class DetailTvShowActivity : AppCompatActivity(){
     }
 
     private fun checkIsFavorite(model: TvShowModel){
-        database?.let {
+        database?.let { it ->
             compositeDisposable.add(
                     it.tvShowDao().loadFavoritesById(model.idData)
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribeOn(Schedulers.computation())
-                            .subscribe{ data ->
+                            .subscribe ({ data ->
                                 isFavorite = data != null
-                            }
+                            },{ error ->
+                                isFavorite = false
+                                error.message?.let{ msg -> Log.e("Check Favorite", msg)}
+                            })
             )
         }
     }

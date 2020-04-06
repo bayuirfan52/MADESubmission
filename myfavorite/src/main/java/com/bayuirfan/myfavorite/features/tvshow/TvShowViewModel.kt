@@ -1,7 +1,7 @@
 package com.bayuirfan.myfavorite.features.tvshow
 
-import android.arch.lifecycle.*
 import android.content.Context
+import androidx.lifecycle.*
 import com.bayuirfan.myfavorite.model.TvShowModel
 import com.bayuirfan.myfavorite.utils.Constant.TV_SHOW_CONTENT_URI
 import com.bayuirfan.myfavorite.utils.CursorMapper

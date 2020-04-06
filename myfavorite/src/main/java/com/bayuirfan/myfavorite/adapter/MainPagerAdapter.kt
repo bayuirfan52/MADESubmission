@@ -1,8 +1,8 @@
 package com.bayuirfan.myfavorite.adapter
 
-import android.support.v4.app.*
+import androidx.fragment.app.*
 
-class MainPagerAdapter(fragmentManager: FragmentManager): FragmentPagerAdapter(fragmentManager) {
+class MainPagerAdapter(fragmentManager: FragmentManager): FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     private val fragments = ArrayList<Fragment>()
     private val title = ArrayList<String>()

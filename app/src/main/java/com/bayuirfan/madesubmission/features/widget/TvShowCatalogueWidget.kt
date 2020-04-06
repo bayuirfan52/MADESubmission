@@ -47,16 +47,16 @@ class TvShowCatalogueWidget : AppWidgetProvider() {
         if (intent?.action != null){
             if (intent.action == LIST_ACTION){
                 val extras = intent.getBundleExtra(EXTRA_ITEM)
-                val model = TvShowModel(
-                        extras.getInt(ID),
-                        extras.getInt(ID_DATA),
-                        extras.getString(NAME),
-                        extras.getString(POSTER_PATH),
-                        extras.getString(BACKDROP_PATH),
-                        extras.getString(OVERVIEW),
-                        extras.getString(VOTE_AVERAGE),
-                        extras.getString(FIRST_AIR_DATE)
-                )
+                val model = extras?.let { TvShowModel(
+                        it.getInt(ID),
+                        it.getInt(ID_DATA),
+                        it.getString(NAME),
+                        it.getString(POSTER_PATH),
+                        it.getString(BACKDROP_PATH),
+                        it.getString(OVERVIEW),
+                        it.getString(VOTE_AVERAGE),
+                        it.getString(FIRST_AIR_DATE)
+                )}
 
                 val moveToDetail = Intent(context, DetailTvShowActivity::class.java)
                 moveToDetail.putExtra(EXTRA_DETAIL, model)

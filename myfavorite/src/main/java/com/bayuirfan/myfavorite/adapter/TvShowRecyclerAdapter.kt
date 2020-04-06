@@ -1,8 +1,8 @@
 package com.bayuirfan.myfavorite.adapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.*
+import androidx.recyclerview.widget.RecyclerView
 import com.bayuirfan.myfavorite.*
 import com.bayuirfan.myfavorite.model.TvShowModel
 import com.bayuirfan.myfavorite.utils.Constant.IMG_W185

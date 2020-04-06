@@ -1,8 +1,8 @@
 package com.bayuirfan.madesubmission.model.local.dao
 
-import android.arch.persistence.room.*
-import android.arch.persistence.room.OnConflictStrategy.REPLACE
 import android.database.Cursor
+import androidx.room.*
+import androidx.room.OnConflictStrategy.REPLACE
 import com.bayuirfan.madesubmission.model.data.TvShowModel
 import com.bayuirfan.madesubmission.utils.Constant.ID_DATA
 import com.bayuirfan.madesubmission.utils.Constant.TV_SHOW_TABLE

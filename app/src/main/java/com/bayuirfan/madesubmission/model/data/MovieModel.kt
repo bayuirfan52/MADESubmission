@@ -1,7 +1,7 @@
 package com.bayuirfan.madesubmission.model.data
 
-import android.arch.persistence.room.*
 import android.os.Parcelable
+import androidx.room.*
 import com.bayuirfan.madesubmission.utils.Constant.BACKDROP_PATH
 import com.bayuirfan.madesubmission.utils.Constant.ID
 import com.bayuirfan.madesubmission.utils.Constant.ID_DATA

@@ -1,12 +1,12 @@
 package com.bayuirfan.madesubmission.features.dashboard.tvshow
 
 
-import android.arch.lifecycle.*
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.*
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.*
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.adapter.TvShowRecyclerAdapter
 import com.bayuirfan.madesubmission.features.dashboard.search.SearchTvShowActivity
@@ -45,8 +45,8 @@ class TvShowFragment : Fragment(), OnItemClickCallback<TvShowModel> {
 
     private fun getTvShowData(){
         showLoading(true)
-        val tvShowViewModel = ViewModelProviders.of(this).get(TvShowViewModel::class.java)
-        tvShowViewModel.getTvShowData().observe(this, getTvShow)
+        val tvShowViewModel = ViewModelProvider(this).get(TvShowViewModel::class.java)
+        tvShowViewModel.getTvShowData().observe(viewLifecycleOwner, getTvShow)
     }
 
     private val getTvShow: Observer<Discover<TvShowModel>> = Observer {data ->

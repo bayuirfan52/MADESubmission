@@ -1,11 +1,11 @@
 package com.bayuirfan.myfavorite.features.movie
 
 
-import android.arch.lifecycle.*
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.*
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.*
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bayuirfan.myfavorite.R
 import com.bayuirfan.myfavorite.adapter.MovieRecyclerAdapter
 import com.bayuirfan.myfavorite.model.MovieModel
@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_movie.*
 /**
  * A simple [Fragment] subclass.
  */
-class MovieFragment : Fragment() {
+class MovieFragment : androidx.fragment.app.Fragment() {
     private lateinit var adapter: MovieRecyclerAdapter
     private val list = mutableListOf<MovieModel>()
 
@@ -38,8 +38,8 @@ class MovieFragment : Fragment() {
     }
 
     private fun loadAllData(){
-        val viewModel = ViewModelProviders.of(this).get(MovieViewModel::class.java)
-        viewModel.getAllData(this.context).observe(this, observer)
+        val viewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
+        viewModel.getAllData(this.context).observe(viewLifecycleOwner, observer)
     }
 
     private val observer : Observer<ArrayList<MovieModel>> = Observer {data ->

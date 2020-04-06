@@ -1,15 +1,12 @@
 package com.bayuirfan.madesubmission.features.favorites.tvshow
 
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.*
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.adapter.TvShowRecyclerAdapter
 import com.bayuirfan.madesubmission.features.dashboard.tvshow.TvShowViewModel
@@ -47,7 +44,7 @@ class TVShowFavoriteFragment : Fragment(), OnItemClickCallback<TvShowModel> {
 
     private fun getFavoriteData(){
         showLoading(true)
-        val tvShowViewModel = ViewModelProviders.of(this).get(TvShowViewModel::class.java)
+        val tvShowViewModel = ViewModelProvider(this).get(TvShowViewModel::class.java)
         tvShowViewModel.getTvShowLocal(this.context).observe(this,getTvShowList)
     }
 

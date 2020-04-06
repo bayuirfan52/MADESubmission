@@ -47,16 +47,16 @@ class MovieCatalogueWidget : AppWidgetProvider() {
         if (intent?.action != null){
             if (intent.action == LIST_ACTION){
                 val extras = intent.getBundleExtra(EXTRA_ITEM)
-                val model = MovieModel(
-                        extras.getInt(ID),
-                        extras.getInt(ID_DATA),
-                        extras.getString(TITLE),
-                        extras.getString(POSTER_PATH),
-                        extras.getString(BACKDROP_PATH),
-                        extras.getString(OVERVIEW),
-                        extras.getString(VOTE_AVERAGE),
-                        extras.getString(RELEASE_DATE)
-                )
+                val model = extras?.let { MovieModel(
+                        it.getInt(ID),
+                        it.getInt(ID_DATA),
+                        it.getString(TITLE),
+                        it.getString(POSTER_PATH),
+                        it.getString(BACKDROP_PATH),
+                        it.getString(OVERVIEW),
+                        it.getString(VOTE_AVERAGE),
+                        it.getString(RELEASE_DATE)
+                )}
 
                 val moveToDetail = Intent(context, DetailMovieActivity::class.java)
                 moveToDetail.putExtra(EXTRA_DETAIL, model)
