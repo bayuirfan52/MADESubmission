@@ -1,79 +1,57 @@
-package com.bayuirfan.madesubmission.adapter;
+package com.bayuirfan.madesubmission.adapter
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.annotation.SuppressLint
+import android.view.View
+import android.view.ViewGroup
+import android.widget.BaseAdapter
+import android.widget.ImageView
+import android.widget.TextView
+import com.bayuirfan.madesubmission.R
+import com.bayuirfan.madesubmission.model.MovieModel
+import java.util.*
 
-import com.bayuirfan.madesubmission.R;
-import com.bayuirfan.madesubmission.model.MovieModel;
-
-import java.util.ArrayList;
-
-public class MovieListAdapter extends BaseAdapter {
-
-    private Context context;
-    private ArrayList<MovieModel> movies;
-
-    public MovieListAdapter(Context context){
-        this.context = context;
-        movies = new ArrayList<>();
+class MovieListAdapter : BaseAdapter() {
+    private var movies: ArrayList<MovieModel>
+    override fun getCount(): Int {
+        return movies.size
     }
 
-    @Override
-    public int getCount() {
-        return movies.size();
+    override fun getItem(position: Int): Any {
+        return movies[position]
     }
 
-    @Override
-    public Object getItem(int position) {
-        return movies.get(position);
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
     }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
+    override fun getView(position: Int, convertView: View, parent: ViewGroup): View {
+        val viewHolder = ViewHolder(convertView)
+        val model = getItem(position) as MovieModel
+        viewHolder.bind(model)
+        return convertView
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null){
-            convertView = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
-        }
-
-        ViewHolder viewHolder = new ViewHolder(convertView);
-        MovieModel model = (MovieModel) getItem(position);
-        viewHolder.bind(model);
-
-        return convertView;
+    fun setMovies(movies: ArrayList<MovieModel>) {
+        this.movies = movies
     }
 
-    public void setMovies(ArrayList<MovieModel> movies) {
-        this.movies = movies;
-    }
-
-    class ViewHolder{
-        private TextView tvTitle, tvAired, tvGenre;
-        private ImageView imgPoster;
-
-        ViewHolder(View view){
-            tvTitle = view.findViewById(R.id.tv_title_list);
-            tvAired = view.findViewById(R.id.tv_aired_list);
-            tvGenre = view.findViewById(R.id.tv_genre_list);
-            imgPoster = view.findViewById(R.id.img_list);
-        }
+    internal inner class ViewHolder(view: View) {
+        private val tvTitle: TextView = view.findViewById(R.id.tv_title_list)
+        private val tvAired: TextView = view.findViewById(R.id.tv_aired_list)
+        private val tvGenre: TextView = view.findViewById(R.id.tv_genre_list)
+        private val imgPoster: ImageView = view.findViewById(R.id.img_list)
 
         @SuppressLint("SetTextI18n")
-        void bind(MovieModel movieModel){
-            tvTitle.setText(movieModel.getTitle());
-            tvAired.setText("Aired : " + movieModel.getYearAired());
-            tvGenre.setText("Genre : " + movieModel.getGenre());
-            imgPoster.setImageResource(movieModel.getPoster());
+        fun bind(movieModel: MovieModel) {
+            tvTitle.text = movieModel.title
+            tvAired.text = "Aired : " + movieModel.yearAired
+            tvGenre.text = "Genre : " + movieModel.genre
+            imgPoster.setImageResource(movieModel.poster)
         }
 
+    }
+
+    init {
+        movies = ArrayList()
     }
 }

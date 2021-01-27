@@ -1,76 +1,75 @@
-package com.bayuirfan.madesubmission.features;
+package com.bayuirfan.madesubmission.features
 
-import android.content.Intent;
-import android.content.res.TypedArray;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.ListView;
+import android.content.Intent
+import android.content.res.TypedArray
+import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ListView
+import androidx.appcompat.app.AppCompatActivity
+import com.bayuirfan.madesubmission.R
+import com.bayuirfan.madesubmission.adapter.MovieListAdapter
+import com.bayuirfan.madesubmission.model.MovieModel
+import java.util.*
 
-import com.bayuirfan.madesubmission.R;
-import com.bayuirfan.madesubmission.adapter.MovieListAdapter;
-import com.bayuirfan.madesubmission.model.MovieModel;
+class MainActivity : AppCompatActivity() {
+    private lateinit var title: Array<String>
+    private lateinit var description: Array<String>
+    private lateinit var aired: Array<String>
+    private lateinit var genre: Array<String>
+    private lateinit var score: Array<String>
+    private lateinit var duration: Array<String>
+    private var image: TypedArray? = null
+    private var adapter: MovieListAdapter? = null
+    private var movies: ArrayList<MovieModel>? = null
 
-import java.util.ArrayList;
-
-public class MainActivity extends AppCompatActivity {
-    private String[] title, description, aired, genre, score, duration;
-    private TypedArray image;
-    private MovieListAdapter adapter;
-    private ArrayList<MovieModel> movies;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        adapter = new MovieListAdapter(this);
-        ListView listView = findViewById(R.id.lv_movies);
-        listView.setAdapter(adapter);
-
-        loadData();
-        setupComponent();
-
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-            Intent intent = new Intent(this, DetailMovieActivity.class);
-
-            MovieModel model = new MovieModel();
-            model.setTitle(movies.get(position).getTitle());
-            model.setPoster(movies.get(position).getPoster());
-            model.setScore(movies.get(position).getScore());
-            model.setYearAired(movies.get(position).getYearAired());
-            model.setGenre(movies.get(position).getGenre());
-            model.setDuration(movies.get(position).getDuration());
-            model.setDescription(movies.get(position).getDescription());
-
-            intent.putExtra(DetailMovieActivity.EXTRA_MOVIE_DETAIL, model);
-            startActivity(intent);
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-        });
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        adapter = MovieListAdapter()
+        val listView: ListView = findViewById(R.id.lv_movies)
+        listView.adapter = adapter
+        loadData()
+        setupComponent()
+        listView.onItemClickListener = AdapterView.OnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
+            val intent = Intent(this, DetailMovieActivity::class.java)
+            val model = MovieModel()
+            model.title = movies!![position].title
+            model.poster = movies!![position].poster
+            model.score = movies!![position].score
+            model.yearAired = movies!![position].yearAired
+            model.genre = movies!![position].genre
+            model.duration = movies!![position].duration
+            model.description = movies!![position].description
+            intent.putExtra(DetailMovieActivity.EXTRA_MOVIE_DETAIL, model)
+            startActivity(intent)
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
     }
 
-    private void loadData(){
-        title = getResources().getStringArray(R.array.movie_title);
-        description = getResources().getStringArray(R.array.movie_description);
-        aired = getResources().getStringArray(R.array.movie_aired);
-        genre = getResources().getStringArray(R.array.movie_genre);
-        score = getResources().getStringArray(R.array.movie_scored);
-        duration = getResources().getStringArray(R.array.movie_duration);
-        image = getResources().obtainTypedArray(R.array.movie_poster);
+    private fun loadData() {
+        title = resources.getStringArray(R.array.movie_title)
+        description = resources.getStringArray(R.array.movie_description)
+        aired = resources.getStringArray(R.array.movie_aired)
+        genre = resources.getStringArray(R.array.movie_genre)
+        score = resources.getStringArray(R.array.movie_scored)
+        duration = resources.getStringArray(R.array.movie_duration)
+        image = resources.obtainTypedArray(R.array.movie_poster)
     }
 
-    private void setupComponent(){
-        movies = new ArrayList<>();
-            for (int i = 0;i < title.length; i++){
-                MovieModel model = new MovieModel();
-                model.setTitle(title[i]);
-                model.setDescription(description[i]);
-                model.setDuration(duration[i]);
-                model.setGenre(genre[i]);
-                model.setYearAired(aired[i]);
-                model.setScore(score[i]);
-                model.setPoster(image.getResourceId(i, -1));
-                movies.add(model);
-            }
-            adapter.setMovies(movies);
+    private fun setupComponent() {
+        movies = ArrayList<MovieModel>()
+        for (i in title.indices) {
+            val model = MovieModel()
+            model.title = title[i]
+            model.description = description[i]
+            model.duration = duration[i]
+            model.genre = genre[i]
+            model.yearAired = aired[i]
+            model.score = score[i]
+            model.poster = image?.getResourceId(i, -1)!!
+            movies!!.add(model)
+        }
+        adapter?.setMovies(movies!!)
     }
 }

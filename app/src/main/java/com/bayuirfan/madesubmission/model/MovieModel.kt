@@ -1,111 +1,50 @@
-package com.bayuirfan.madesubmission.model;
+package com.bayuirfan.madesubmission.model
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.os.Parcel
+import android.os.Parcelable
 
-public class MovieModel implements Parcelable {
-    private String title;
-    private String description;
-    private String yearAired;
-    private String score;
-    private String genre;
-    private String duration;
-    private int poster;
-
-    public String getTitle() {
-        return title;
+class MovieModel : Parcelable {
+    var title: String? = null
+    var description: String? = null
+    var yearAired: String? = null
+    var score: String? = null
+    var genre: String? = null
+    var duration: String? = null
+    var poster = 0
+    override fun describeContents(): Int {
+        return 0
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    override fun writeToParcel(dest: Parcel, flags: Int) {
+        dest.writeString(title)
+        dest.writeString(description)
+        dest.writeString(yearAired)
+        dest.writeString(score)
+        dest.writeString(genre)
+        dest.writeString(duration)
+        dest.writeInt(poster)
     }
 
-    public String getDescription() {
-        return description;
+    constructor()
+    private constructor(`in`: Parcel) {
+        title = `in`.readString()
+        description = `in`.readString()
+        yearAired = `in`.readString()
+        score = `in`.readString()
+        genre = `in`.readString()
+        duration = `in`.readString()
+        poster = `in`.readInt()
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    companion object {
+        val CREATOR: Parcelable.Creator<MovieModel?> = object : Parcelable.Creator<MovieModel?> {
+            override fun createFromParcel(source: Parcel): MovieModel {
+                return MovieModel(source)
+            }
 
-    public String getYearAired() {
-        return yearAired;
-    }
-
-    public void setYearAired(String yearAired) {
-        this.yearAired = yearAired;
-    }
-
-    public String getScore() {
-        return score;
-    }
-
-    public void setScore(String score) {
-        this.score = score;
-    }
-
-    public int getPoster() {
-        return poster;
-    }
-
-    public void setPoster(int poster) {
-        this.poster = poster;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public String getDuration() {
-        return duration;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.title);
-        dest.writeString(this.description);
-        dest.writeString(this.yearAired);
-        dest.writeString(this.score);
-        dest.writeString(this.genre);
-        dest.writeString(this.duration);
-        dest.writeInt(this.poster);
-    }
-
-    public MovieModel() {
-    }
-
-    private MovieModel(Parcel in) {
-        this.title = in.readString();
-        this.description = in.readString();
-        this.yearAired = in.readString();
-        this.score = in.readString();
-        this.genre = in.readString();
-        this.duration = in.readString();
-        this.poster = in.readInt();
-    }
-
-    public static final Parcelable.Creator<MovieModel> CREATOR = new Parcelable.Creator<MovieModel>() {
-        @Override
-        public MovieModel createFromParcel(Parcel source) {
-            return new MovieModel(source);
+            override fun newArray(size: Int): Array<MovieModel?> {
+                return arrayOfNulls(size)
+            }
         }
-
-        @Override
-        public MovieModel[] newArray(int size) {
-            return new MovieModel[size];
-        }
-    };
+    }
 }
