@@ -2,9 +2,9 @@ package com.bayuirfan.madesubmission.features.details.movie
 
 import android.database.sqlite.SQLiteConstraintException
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
+import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -150,7 +150,7 @@ class DetailMovieActivity : AppCompatActivity(){
         }
         showSnackbarMessage(getString(R.string.added_message))
     } catch (e: SQLiteConstraintException){
-        showSnackbarMessage(e.localizedMessage)
+        showSnackbarMessage(e.localizedMessage!!)
     }
 
     private fun removeFromFavorite() = try {
@@ -161,7 +161,7 @@ class DetailMovieActivity : AppCompatActivity(){
         }
         showSnackbarMessage(getString(R.string.removed_message))
     } catch (e : SQLiteConstraintException){
-        showSnackbarMessage(e.localizedMessage)
+        showSnackbarMessage(e.localizedMessage!!)
     }
 
     private fun showSnackbarMessage(message: String){

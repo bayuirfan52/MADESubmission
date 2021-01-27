@@ -1,5 +1,5 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">Movie Catalogue</string>
+    <string name="app_name">The Catalogue</string>
     <string name="overview">Overview</string>
     <string name="title_sample">Title Sample</string>
     <string name="aired_sample">Aired</string>
@@ -19,4 +19,20 @@
     <string name="favorite">Favorite</string>
     <string name="removed_message">Removed from Favorite</string>
     <string name="added_message">Added to Favorite</string>
+    <string name="daily_reminder">Daily Reminder</string>
+    <string name="daily_reminder_information">It will sends a reminder every 7 o\'clock</string>
+    <string name="release_today_reminder">Release Today</string>
+    <string name="release_today_reminder_information">This will send the latest release information</string>
+    <string name="language">Language</string>
+    <string name="language_information">Change your phone language</string>
+    <string name="search">Search</string>
+    <string name="favorite_movie">Favorite Movies</string>
+    <string name="tv_show_favorite">Favorite TV Show</string>
+    <string name="daily_reminder_active">Your Daily Reminder is On</string>
+    <string name="daily_reminder_not_active">Your Daily Reminder is Off</string>
+    <string name="daily_reminder_message">Hi. Check again for the latest movie and tv show updates</string>
+    <string name="release_reminder_active">New Release Reminder is On</string>
+    <string name="release_reminder_not_active">New Release Reminder is Not Active</string>
+    <string name="release_reminder_message">Hi. This new updates for you.</string>
+    <string name="no_updates">Nothing updates for now.</string>
 </resources>

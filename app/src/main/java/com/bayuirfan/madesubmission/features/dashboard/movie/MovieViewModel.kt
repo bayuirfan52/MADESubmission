@@ -1,7 +1,7 @@
 package com.bayuirfan.madesubmission.features.dashboard.movie
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import android.content.Context
 import android.util.Log
 import com.bayuirfan.madesubmission.model.data.Discover
@@ -15,20 +15,20 @@ import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 
-class MovieViewModel: ViewModel() {
+class MovieViewModel : ViewModel() {
     private val service = MovieCatalogueService.getClient()
     private val response = MutableLiveData<Discover<MovieModel>>()
     private val result = MutableLiveData<ArrayList<MovieModel>>()
     private val compositeSubscription = CompositeSubscription()
 
-    fun getMovieList(): MutableLiveData<Discover<MovieModel>>{
+    fun getMovieList(): MutableLiveData<Discover<MovieModel>> {
         val subscription = service.getMovieList()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
-                .subscribe ({ data ->
+                .subscribe({ data ->
                     response.value = data
-                },{err ->
-                    Log.e("ERROR",err.message)
+                }, { err ->
+                    err.message?.let { Log.e("ERROR", it) }
                     response.value = null
                 })
 

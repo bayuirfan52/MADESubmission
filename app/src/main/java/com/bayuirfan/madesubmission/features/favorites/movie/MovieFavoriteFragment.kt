@@ -1,15 +1,13 @@
 package com.bayuirfan.madesubmission.features.favorites.movie
 
-
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bayuirfan.madesubmission.R
 import com.bayuirfan.madesubmission.adapter.MovieRecyclerAdapter
 import com.bayuirfan.madesubmission.features.dashboard.movie.MovieViewModel
@@ -36,22 +34,22 @@ class MovieFavoriteFragment : Fragment(), OnItemClickCallback<MovieModel> {
 
         context?.let {
             adapter = MovieRecyclerAdapter(it, data as ArrayList<MovieModel>, this)
-            view.rv_movie_favorite.layoutManager = LinearLayoutManager(it)
+            view.rv_movie_favorite.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(it)
         }
         view.rv_movie_favorite.adapter = adapter
         view.rv_movie_favorite.setHasFixedSize(true)
     }
 
-    private fun getFavoriteData(){
+    private fun getFavoriteData() {
         showLoading(true)
-        val movieViewModel = ViewModelProviders.of(this).get(MovieViewModel::class.java)
-        movieViewModel.getMovieLocalList(this.context).observe(this,getMovieList)
+        val movieViewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
+        movieViewModel.getMovieLocalList(this.context).observe(this, getMovieList)
     }
 
-    private val getMovieList : Observer<ArrayList<MovieModel>> = Observer { data ->
+    private val getMovieList: Observer<ArrayList<MovieModel>> = Observer { data ->
         showLoading(false)
-        if (data != null){
-            if (data.size == 0){
+        if (data != null) {
+            if (data.size == 0) {
                 showError()
             } else {
                 this.data.clear()
@@ -69,13 +67,13 @@ class MovieFavoriteFragment : Fragment(), OnItemClickCallback<MovieModel> {
         getFavoriteData()
     }
 
-    private fun showError(){
+    private fun showError() {
         iv_not_found_favorite.visibility = View.VISIBLE
         tv_not_found_favorite.visibility = View.VISIBLE
         rv_movie_favorite.visibility = View.GONE
     }
 
-    private fun hideError(){
+    private fun hideError() {
         iv_not_found_favorite.visibility = View.GONE
         tv_not_found_favorite.visibility = View.GONE
         rv_movie_favorite.visibility = View.VISIBLE
@@ -87,7 +85,7 @@ class MovieFavoriteFragment : Fragment(), OnItemClickCallback<MovieModel> {
         startActivity(intent)
     }
 
-    private fun showLoading(value: Boolean){
+    private fun showLoading(value: Boolean) {
         if (value) {
             progress_movie_favorite.visibility = View.VISIBLE
             rv_movie_favorite.visibility = View.GONE
